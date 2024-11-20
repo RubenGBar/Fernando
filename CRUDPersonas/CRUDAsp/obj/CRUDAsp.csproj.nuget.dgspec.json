@@ -1,0 +1,139 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\CRUDAsp\\CRUDAsp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\BL\\BL.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\BL\\BL.csproj",
+        "projectName": "BL",
+        "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\BL\\BL.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\DAL\\DAL.csproj"
+              },
+              "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj": {
+                "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\CRUDAsp\\CRUDAsp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\CRUDAsp\\CRUDAsp.csproj",
+        "projectName": "CRUDAsp",
+        "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\CRUDAsp\\CRUDAsp.csproj",
+        "packagesPath": "C:\\Users\\rgarcia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\CRUDAsp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\rgarcia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\BL\\BL.csproj": {
+                "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\BL\\BL.csproj"
+              },
+              "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj": {
+                "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\DAL\\DAL.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\DAL\\DAL.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj": {
+                "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj",
+        "projectName": "Entidades",
+        "projectPath": "C:\\Users\\rgarcia\\Desktop\\Repositorios\\Fernando\\CRUDPersonas\\Entidades\\Entidades.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    }
+  }
+}
