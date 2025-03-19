@@ -1,0 +1,71 @@
+ENT:
+	ClsCaballo:
+		- int idCaballo: {get;}
+		- String nombre: {get; set;}
+		- int idRaza: {get; set;}
+		+ Caballo()
+		+ Caballo(idCaballo, nombre, idRaza)
+
+	ClsRaza:
+		- int idRaza: {get;}
+		- String nomnbre: {get; set;}
+		+ Raza()
+		+ Raza(idRaza, nombre)
+
+DAL:
+	- static List <ClsCaballo> listadoCaballosDAL 
+	+ static List <ClsCaballo> listadoCompletoCaballoDAL {get;}
+	+ static List <ClsCaballo> listadoCompletoCaballoDAL() {
+		Rellenar este listado a mano
+		return listadoCaballosDAL;
+	}
+
+	- static List <ClsRaza> listadoRazasDAL 
+	+ static List <ClsRaza> listadoCompletoRazasDAL {get;}
+	+ static List <ClsRaza> listadoCompletoRazasDAL() {
+		Rellenar este listado a mano
+		return listadoRazasDAL;
+	}
+
+	+ int actualizarRazaCaballoDAL(int idCaballo, int idRaza){
+		
+		return numeroFilasAfectadas;
+	}
+
+BL:
+	+ static List <ClsCaballo> listadoCompletoCaballoBL () {
+		Rellenar este listado a mano
+		return listadoCompletoCaballoDAL;
+	}
+
+	+ static List <ClsRaza> listadoCompletoRazasBL() {
+		Rellenar este listado a mano
+		return listadoCompletoRazasDAL;
+	}
+
+	+ int actualizarRazaCaballoBL(int idCaballo, int idRaza){
+
+		int filasAfectadas = actualizarRazaCaballoDAL(idCaballo,idRaza);
+
+		return numeroFilasAfectadas;
+	}
+UI:
+	
+	MODELS:
+		ClsCaballoConListadoRazas: ClsCaballo {
+			
+			- List <ClsRaza> razasCaballo {get;}
+			- ClsRaza razaSelect {get; set;}
+			+ ClsCaballoConRazas() {
+				// Rellenamos el listado de razasCaballo
+			}
+			+ ClsCaballoConRazas (List <ClsRaza> razasCaballoParam) {
+				// Añadir en el constructor que reciba como parámetros un listado de razas, para rellenar la lista razasCaballo
+			}		
+
+		}
+
+	VM: 
+		- ObservableCollection <CaballoConListadoRazas> ListadoDeCaballosConRazas {get;}
+		- Commands
+	
