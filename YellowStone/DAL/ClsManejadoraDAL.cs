@@ -18,7 +18,7 @@ namespace DAL
             int numeroFilasAfectadas = 0;
 
             // Cambiar por un While
-            foreach (var caballo in ListadosDAL.listadoCaballosDAL)
+            foreach (var caballo in ListadosDAL.obtenerListadoCaballoDAL())
             {
                 if (caballo.IdCaballo == idCaballo)
                 {

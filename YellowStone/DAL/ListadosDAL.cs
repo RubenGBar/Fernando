@@ -6,7 +6,7 @@ namespace DAL
     {
 
         #region Propiedades
-        public static List<ClsCaballo> listadoCaballosDAL = new List<ClsCaballo>
+        private static List<ClsCaballo> listadoCaballosDAL = new List<ClsCaballo>
         {
                 new ClsCaballo(1, "Blue Note", 0),
                 new ClsCaballo(2, "Star", 0),
@@ -17,7 +17,7 @@ namespace DAL
                 new ClsCaballo(7, "Dakota", 0),
                 new ClsCaballo(8, "Cash", 0)
         };
-        public static List<ClsRaza> listadoRazasDAL = new List<ClsRaza>
+        private static List<ClsRaza> listadoRazasDAL = new List<ClsRaza>
         {
                 new ClsRaza(1, "Mustang"),
                 new ClsRaza(2, "Paint Horse"),
