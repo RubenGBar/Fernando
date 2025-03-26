@@ -1,0 +1,44 @@
+﻿@model Actividad3UD8.Models.VM.ClsPersonaConListadoDepartamentoVM
+@{
+}
+<h3>Editar esta Persona</h3>
+<div>
+    <form action="Modificada" method="post">
+        <p>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="Nombre" value="@Model.Nombre" />
+        </p>
+
+        <p>
+            <label for="apellido">Apellido:</label>
+            @Html.TextBox("Apellido", Model.Apellido)
+        </p>
+
+        <p>
+            <label for="email">Email:</label>
+            @Html.TextBox("Email", Model.Email)
+        </p>
+
+        <p>
+            <label for="dni">DNI:</label>
+            @Html.TextBox("Dni", Model.Dni)
+       </p>
+
+        <p>
+            <label for="sexo">Sexo:</label>
+            @Html.TextBox("Sexo", Model.Sexo)
+        </p>
+
+        <p>
+            <label for="telefono">Teléfono:</label>
+            @Html.TextBox("Telefono", Model.Telefono)
+        </p>
+
+        <p>
+            <label for="idDepartamento">ID Departamento:</label>
+            @Html.TextBox("IdDepartamento", Model.IdDepartamento)
+        </p>
+
+        <button type="submit">Guardar</button>
+    </form>
+</div>

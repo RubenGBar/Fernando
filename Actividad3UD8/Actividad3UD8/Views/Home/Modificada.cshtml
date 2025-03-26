@@ -1,0 +1,31 @@
+﻿@{
+    @model ENT.ClsPersona;
+}
+<h3>Persona con sus Datos Modificados</h3>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>DNI</th>
+                <th>Sexo</th>
+                <th>Teléfono</th>
+                <th>ID Departamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Nombre</td>
+                <td>@Model.Apellido</td>
+                <td>@Model.Email</td>
+                <td>@Model.Dni</td>
+                <td>@Model.Sexo</td>
+                <td>@Model.Telefono</td>
+                <td>@Model.IdDepartamento</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+

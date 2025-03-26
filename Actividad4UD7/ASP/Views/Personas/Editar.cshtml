@@ -1,0 +1,44 @@
+﻿@model ASP.Models.VM.ClsPersonaConListadoDepartamentoVM
+
+@{
+    ViewData["Title"] = "Editar Persona";
+}
+
+<h3>Editar Persona</h3>
+
+<form asp-action="Editar" method="post">
+    <div class="form-group">
+        <label for="Nombre">Nombre</label>
+        <input type="text" id="Nombre" name="Nombre" class="form-control" value="@Model.Nombre" />
+    </div>
+    <div class="form-group">
+        <label for="Apellido">Apellido</label>
+        <input type="text" id="Apellido" name="Apellido" class="form-control" value="@Model.Apellido" />
+    </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" />
+    </div>
+    <div class="form-group">
+        <label for="Dni">DNI</label>
+        <input type="text" id="Dni" name="Dni" class="form-control" value="@Model.Dni" />
+    </div>
+    <div class="form-group">
+        <label for="Sexo">Sexo</label>
+        <input type="text" id="Sexo" name="Sexo" class="form-control" value="@Model.Sexo" />
+    </div>
+    <div class="form-group">
+        <label for="Telefono">Teléfono</label>
+        <input type="text" id="Telefono" name="Telefono" class="form-control" value="@Model.Telefono" />
+    </div>
+    <div class="form-group">
+        <label for="IdDepartamento">Departamento</label>
+        <select id="IdDepartamento" name="IdDepartamento" class="form-control">
+            @foreach (var dep in Model.ListadoDepartamentos)
+            {
+                <option value="@dep.Id" selected="@(Model.IdDepartamento == dep.Id)">@dep.Nombre</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

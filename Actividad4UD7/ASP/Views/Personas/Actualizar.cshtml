@@ -1,6 +1,37 @@
 ﻿@model ASP.Models.VM.ClsPersonaConListadoDepartamentoVM
 @{
 }
+<h3>Persona</h3>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>DNI</th>
+            <th>Sexo</th>
+            <th>Teléfono</th>
+            <th>ID Departamento</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Nombre</td>
+            <td>@Model.Apellido</td>
+            <td>@Model.Email</td>
+            <td>@Model.Dni</td>
+            <td>@Model.Sexo</td>
+            <td>@Model.Telefono</td>
+            <td>@Model.IdDepartamento</td>
+        </tr>
+    </tbody>
+</table>
 <div>
-    @Model.Nombre
+    <p>
+        @Html.ActionLink("Editar", "Editar")
+    </p>
+    <p>
+        @Html.ActionLink("Volver al Index", "Index")
+    </p>
 </div>

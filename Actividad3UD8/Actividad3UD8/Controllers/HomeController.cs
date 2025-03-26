@@ -1,32 +1,30 @@
-using System.Diagnostics;
-using Actividad3UD8.Models;
+using Actividad3UD8.Models.VM;
+using BL;
+using ENT;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Actividad3UD8.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Editar()
         {
-            return View();
+            ClsPersona personaAleatoria = ClsListadoPersonasBL.obtenerPersonaAleatoria();
+            ClsPersonaConListadoDepartamentoVM personaVM = new ClsPersonaConListadoDepartamentoVM(personaAleatoria);
+            return View(personaVM);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public ActionResult Modificada(ClsPersona personaModificada)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ClsPersonaConListadoDepartamentoVM personaVM = new ClsPersonaConListadoDepartamentoVM(personaModificada);
+            return View(personaVM);
         }
+
     }
 }
