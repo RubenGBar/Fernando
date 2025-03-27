@@ -5,7 +5,7 @@
 
         #region Propiedades
         public int IdRaza { get; }
-        public string Nombre { get; set; }
+        public string NombreRaza { get; set; }
         #endregion
 
         #region Constructores
@@ -16,7 +16,7 @@
         public ClsRaza(int idRaza, string nombre)
         {
             this.IdRaza = idRaza;
-            this.Nombre = nombre;
+            this.NombreRaza = nombre;
         }
         #endregion
 

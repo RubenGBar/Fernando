@@ -17,18 +17,12 @@ namespace DAL
         {
             int numeroFilasAfectadas = 0;
 
-            // Cambiar por un While
-            foreach (var caballo in ListadosDAL.obtenerListadoCaballoDAL())
+            // Cambiar por una expresión Lambda
+            var caballo = ListadosDAL.obtenerListadoCaballoDAL().FirstOrDefault(c => c.IdCaballo == idCaballo);
+            if (caballo != null && caballo.IdRaza != idRaza)
             {
-                if (caballo.IdCaballo == idCaballo)
-                {
-                    if (idRaza != caballo.IdRaza)
-                    {
-                        caballo.IdRaza = idRaza;
-                        numeroFilasAfectadas++;
-                        break;
-                    }
-                }
+                caballo.IdRaza = idRaza;
+                numeroFilasAfectadas++;
             }
 
             return numeroFilasAfectadas;

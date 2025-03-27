@@ -67,8 +67,4 @@
 	  <ProjectReference Include="..\ENT\ENT.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Views\" />
-	</ItemGroup>
-
 </Project>
