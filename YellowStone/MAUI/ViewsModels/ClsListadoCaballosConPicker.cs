@@ -2,7 +2,9 @@
 using BL;
 using System.Collections.ObjectModel;
 using MAUI.Models;
-using System.Windows.Input;
+using MAUI.ViewsModels.Utils;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MAUI.ViewsModels
 {
@@ -11,7 +13,8 @@ namespace MAUI.ViewsModels
 
         #region Propiedades
         public ObservableCollection<ClsCaballoConListadoRazas> ListadoDeCaballosConConListaDeRazas { get; }
-        //public ICommand ActualizarCommand { get; }
+        public DelegateCommand ActualizarCommand { get; }
+        public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
         #region Constructores
@@ -30,13 +33,30 @@ namespace MAUI.ViewsModels
                     ClsCaballoConListadoRazas caballoConRazas = new ClsCaballoConListadoRazas(caballo, listadoRazas);
                     ListadoDeCaballosConConListaDeRazas.Add(caballoConRazas);
                 }
+
+                ActualizarCommand = new DelegateCommand(ActualizarCommand_Executed);
+
             }
             catch (Exception e)
             {
                 //TODO: Avisar al usuario mediante un display alert que halgo ha pasado con la Base de Datos
             }
-            #endregion
         }
+        #endregion
 
+        #region Comandos
+        private async void ActualizarCommand_Executed()
+        {
+            int filasAfectadas = 0;
+            foreach (ClsCaballoConListadoRazas caballoConRazas in ListadoDeCaballosConConListaDeRazas)
+            {
+                if (caballoConRazas.RazaSeleccionada.IdRaza != 0)
+                {
+                    filasAfectadas += ClsManejadoraBL.actualizarRazaCaballoBL(caballoConRazas.IdCaballo, caballoConRazas.RazaSeleccionada.IdRaza);
+                }  
+            }
+            await Shell.Current.DisplayAlert("Actualizado", "Se ha/n actualizado " + filasAfectadas + " caballo/s", "OK");
+        }
+        #endregion
     }
 }

@@ -17,7 +17,6 @@ namespace DAL
         {
             int numeroFilasAfectadas = 0;
 
-            // Cambiar por una expresión Lambda
             var caballo = ListadosDAL.obtenerListadoCaballoDAL().FirstOrDefault(c => c.IdCaballo == idCaballo);
             if (caballo != null && caballo.IdRaza != idRaza)
             {
