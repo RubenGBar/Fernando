@@ -7,34 +7,14 @@ namespace BL
     {
         #region Funciones
         /// <summary>
-        /// Esta función llamará a la DAL y devolverá un listado de Personas con las reglas de negocio aplicadas
+        /// Función que se conecta con la BD en Azure y devuelve un listado de personas
         /// Pre: nada
-        /// Pos: nada
+        /// Post: puede haber un error al conectarse con la BD
         /// </summary>
-        /// <returns>List<ClsPersona> con las reglas de negocios aplicadas </returns>
-        public static List<ClsPersona> obtenerListadoPersonasBL()
-        {
-            return ClsListadosDAL.obtenerListadoPersonasDAL();
-        }
-        /// <summary>
-        /// Función que devuelve una persona aleatoria de la DAL
-        /// Pre: el id debe existir en la lista
-        /// Post: nunca devolverá null
-        /// </summary>
-        /// <returns> Devuelve la persona encontrada </returns>
-        public static ClsPersona obtenerPersonaAleatoria()
-        {
-            int idPersona = 0;
-            int numeroRandom = 0;
-            Random rnd = new Random();
-            numeroRandom = rnd.Next(0, ClsListadosDAL.obtenerListadoPersonasCount());
-            idPersona = ClsListadosDAL.obtenerIDPersonaPorPosicion(numeroRandom);
-            return ClsListadosDAL.obtenerPersonaPorID(idPersona);
-        }
-
+        /// <returns> El listado de personas de la base de datos </returns>
         public static List<ClsPersona> obtenerListadoBD()
         {
-            return ClsListadosDAL.obtenerListadoBD();
+            return ClsListadoPersonasDAL.obtenerListadoBD();
         }
 
         #endregion

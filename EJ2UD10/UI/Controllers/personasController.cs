@@ -1,6 +1,7 @@
 ﻿using BL;
 using ENT;
 using Microsoft.AspNetCore.Mvc;
+using UI.Models.VM;
 
 namespace UI.Controllers
 {
@@ -13,9 +14,15 @@ namespace UI.Controllers
 
         public IActionResult listado()
         {
-            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.obtenerListadoPersonasBL();
+            ClsListadoPersonaNombreDepartamento listadoPersonas = new ClsListadoPersonaNombreDepartamento();
 
             return View(listadoPersonas);
+        }
+
+        public IActionResult edit(int id)
+        {
+            // TODO: Buscar persona con ese ID y devolverlo a la vista
+            return View();
         }
 
     }
