@@ -14,7 +14,11 @@ namespace UI.Controllers
 
         public IActionResult listado()
         {
+<<<<<<< Updated upstream
             ClsListadoPersonaNombreDepartamento listadoPersonas = new ClsListadoPersonaNombreDepartamento();
+=======
+            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.obtenerListadoBD();
+>>>>>>> Stashed changes
 
             return View(listadoPersonas);
         }
