@@ -11,9 +11,9 @@ namespace BL
         /// Post: puede devolver una lista vacía
         /// </summary>
         /// <returns> El listado de departamentos de la base de datos </returns>
-        public static List<ClsDepartamento> obtenerListadoDepartamentosBD()
+        public static List<ClsDepartamento> obtenerListadoBD()
         {
-            return ClsListadoDepartamentosDAL.obtenerListadoDepartamentosBD();
+            return ClsListadoDepartamentosDAL.obtenerListadoBD();
         }
     }
 }

@@ -3,22 +3,23 @@ using ENT;
 
 namespace UI.Models.VM
 {
-    public class ClsListadoPersonaNombreDepartamento
+    public class ClsListadoPersonaNombreDepartamento : ClsPersona
     {
         #region Propiedades
-        public List<ClsPersonaConDepartamento> listadoCompleto { get; }
+        public List<ClsPersona> ListadoCompleto = new List<ClsPersona>();
+        public string NombreDepartamento { get; set; }
         #endregion
 
-
-        public ClsListadoPersonaNombreDepartamento()
+        public ClsListadoPersonaNombreDepartamento(ClsPersona persona, List<ClsDepartamento> listaDepartamento)
+        : base(persona.Id, persona.Nombre, persona.Apellido, persona.Email, persona.Telefono, persona.IdDepartamento, persona.Dni, persona.Sexo)
         {
-            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.obtenerListadoBD();
-            List<ClsDepartamento> listadoDepartamentos = ClsListadoDepartamentosBL.obtenerListadoDepartamentosBD();
-            listadoCompleto = new List<ClsListadoPersonaNombreDepartamento>();
-            foreach (ClsPersona persona in listadoPersonas)
+            foreach (ClsDepartamento departamento in listaDepartamento)
             {
-                ClsPersonaConDepartamento nuevaPersona = new ClsPersonaConDepartamento(persona, listadoDepartamentos);
-                listadoCompleto.Add(nuevaPersona);
+                if (departamento.Id == persona.IdDepartamento)
+                {
+                    NombreDepartamento = departamento.Nombre;
+                }
+                ListadoCompleto.Add(persona);
             }
         }
     }

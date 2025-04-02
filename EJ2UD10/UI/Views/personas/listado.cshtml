@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ENT.ClsPersona>
+﻿@model IEnumerable<UI.Models.VM.ClsListadoPersonaNombreDepartamento>
 
 @{
     ViewData["Title"] = "listado";
@@ -34,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.Telefono)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdDepartamento)
+                Departamento
             </th>
             <th></th>
         </tr>
@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.Telefono)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdDepartamento)
+                @Html.DisplayFor(modelItem => item.NombreDepartamento)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

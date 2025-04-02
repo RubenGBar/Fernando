@@ -14,9 +14,17 @@ namespace UI.Controllers
 
         public IActionResult listado()
         {
-            ClsListadoPersonaNombreDepartamento listadoPersonas = new ClsListadoPersonaNombreDepartamento();
+            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.obtenerListadoBD();
+            List<ClsDepartamento> listadoDepartamentos = ClsListadoDepartamentosBL.obtenerListadoBD();
+            List<ClsListadoPersonaNombreDepartamento> listadoVM = new List<ClsListadoPersonaNombreDepartamento>();
+            
+            foreach(ClsPersona persona in listadoPersonas)
+            {
+                ClsListadoPersonaNombreDepartamento personaVM = new ClsListadoPersonaNombreDepartamento(persona, listadoDepartamentos);
+                listadoVM.Add(personaVM);
+            }
 
-            return View(listadoPersonas);
+            return View(listadoVM);
         }
 
         public IActionResult edit(int id)
