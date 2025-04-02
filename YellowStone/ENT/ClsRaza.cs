@@ -18,6 +18,10 @@
             this.IdRaza = idRaza;
             this.NombreRaza = nombre;
         }
+        public ClsRaza(int idRaza)
+        {
+            this.IdRaza = idRaza;
+        }
         #endregion
 
     }

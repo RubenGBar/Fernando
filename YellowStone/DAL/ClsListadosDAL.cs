@@ -2,9 +2,8 @@
 
 namespace DAL
 {
-    public class ListadosDAL
+    public class ClsListadosDAL
     {
-
         #region Propiedades
         private static List<ClsCaballo> listadoCaballosDAL = new List<ClsCaballo>
         {

@@ -15,7 +15,7 @@ namespace BL
         /// <returns>List<ClsCaballo> con las reglas de negocios aplicadas </returns>
         public static List<ClsCaballo> obtenerListadoCaballoBL()
         {
-            return ListadosDAL.obtenerListadoCaballoDAL();
+            return ClsListadosDAL.obtenerListadoCaballoDAL();
         }
         /// <summary>
         /// Esta función llamará a la DAL y devolverá un listado de Razas con las reglas de negocio aplicadas
@@ -25,7 +25,7 @@ namespace BL
         /// <returns>List<ClsRaza> con las reglas de negocios aplicadas </returns>
         public static List<ClsRaza> obtenerListadoRazaBL()
         {
-            return ListadosDAL.obtenerListadoRazaDAL();
+            return ClsListadosDAL.obtenerListadoRazaDAL();
         }
         #endregion
 

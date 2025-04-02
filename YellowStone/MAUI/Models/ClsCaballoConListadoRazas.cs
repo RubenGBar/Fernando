@@ -11,7 +11,8 @@ namespace MAUI.Models
         #endregion
 
         #region Constructores
-        public ClsCaballoConListadoRazas(ClsCaballo caballo, List<ClsRaza> razasCaballoParam) : base(caballo.IdCaballo, caballo.Nombre, caballo.IdRaza)
+        public ClsCaballoConListadoRazas(ClsCaballo caballo, List<ClsRaza> razasCaballoParam) 
+        : base(caballo.IdCaballo, caballo.Nombre, caballo.IdRaza)
         {
             this.RazasCaballo = razasCaballoParam;
             if (caballo.IdRaza == 0)

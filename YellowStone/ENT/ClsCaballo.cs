@@ -33,6 +33,10 @@
             this.Nombre = nombre;
             this.IdRaza = idRaza;
         }
+        public ClsCaballo(int idCaballo)
+        {
+            this.IdCaballo = idCaballo;
+        }
         #endregion
 
 
