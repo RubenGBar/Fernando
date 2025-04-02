@@ -49,7 +49,7 @@ namespace DAL
             try
             {
                 miConexion.ConnectionString
-                = "server=localhost;database=RubenBD;uid=usuario;pwd=LaCampana123;trustServerCertificate=true;";
+                = "server=rubengarcia.database.windows.net;database=RubenBD;uid=usuario;pwd=LaCampana123;trustServerCertificate=true;";
                 miConexion.Open();
 
                 miComando.CommandText = "SELECT * FROM personas";
