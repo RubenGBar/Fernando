@@ -14,6 +14,7 @@ namespace UI.Controllers
 
         public IActionResult listado()
         {
+<<<<<<< HEAD
             List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.obtenerListadoBD();
             List<ClsDepartamento> listadoDepartamentos = ClsListadoDepartamentosBL.obtenerListadoBD();
             List<ClsListadoPersonaNombreDepartamento> listadoVM = new List<ClsListadoPersonaNombreDepartamento>();
@@ -23,6 +24,13 @@ namespace UI.Controllers
                 ClsListadoPersonaNombreDepartamento personaVM = new ClsListadoPersonaNombreDepartamento(persona, listadoDepartamentos);
                 listadoVM.Add(personaVM);
             }
+=======
+<<<<<<< Updated upstream
+            ClsListadoPersonaNombreDepartamento listadoPersonas = new ClsListadoPersonaNombreDepartamento();
+=======
+            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.obtenerListadoBD();
+>>>>>>> Stashed changes
+>>>>>>> origin/main
 
             return View(listadoVM);
         }
