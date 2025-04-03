@@ -1,4 +1,5 @@
 ﻿using ENT;
+using Microsoft.Data.SqlClient;
 
 namespace DAL
 {
@@ -16,12 +17,26 @@ namespace DAL
         public static int actualizarRazaCaballoDAL(int idCaballo, int idRaza)
         {
             int numeroFilasAfectadas = 0;
+            SqlConnection conexion = new SqlConnection();
+            SqlCommand comando = new SqlCommand();
 
-            var caballo = ClsListadosDAL.obtenerListadoCaballoDAL().FirstOrDefault(c => c.IdCaballo == idCaballo);
-            if (caballo != null && caballo.IdRaza != idRaza)
+            try
             {
-                caballo.IdRaza = idRaza;
-                numeroFilasAfectadas++;
+                conexion = ConexionBD.getConexion();
+                comando.Parameters.Add("@idCaballo", System.Data.SqlDbType.Int).Value = idCaballo;
+                comando.Parameters.Add("@idRaza", System.Data.SqlDbType.Int).Value = idRaza;
+                var caballo = ClsListadosDAL.obtenerListadoCaballoDAL().FirstOrDefault(c => c.IdCaballo == idCaballo);
+                
+                if (caballo != null && caballo.IdRaza != idRaza)
+                {
+                    comando.CommandText = "UPDATE Caballo SET IdRaza = @idRaza WHERE IdCaballo = @idCaballo";
+                    comando.Connection = conexion;
+                    numeroFilasAfectadas = comando.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //TODO: Poner mensaje, no funciona display alert
             }
 
             return numeroFilasAfectadas;

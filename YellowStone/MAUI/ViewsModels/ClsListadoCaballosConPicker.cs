@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using MAUI.Models;
 using MAUI.ViewsModels.Utils;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace MAUI.ViewsModels
 {
@@ -39,7 +38,7 @@ namespace MAUI.ViewsModels
             }
             catch (Exception e)
             {
-                //TODO: Avisar al usuario mediante un display alert que halgo ha pasado con la Base de Datos
+                MuestraMensaje("Error", "No se ha podido cargar el listado de caballos, intentelo más tarde", "OK");
             }
         }
         #endregion
@@ -47,15 +46,38 @@ namespace MAUI.ViewsModels
         #region Comandos
         private async void ActualizarCommand_Executed()
         {
-            int filasAfectadas = 0;
+            int filasTotalesAfectadas = 0;
+            int filaActualAfectada = 0;
+            string mensajeCuerpo;
             foreach (ClsCaballoConListadoRazas caballoConRazas in ListadoDeCaballosConConListaDeRazas)
             {
-                if (caballoConRazas.RazaSeleccionada.IdRaza != 0)
+                if (caballoConRazas.RazaSeleccionada.IdRaza != 0 && caballoConRazas.RazaSeleccionada.IdRaza != caballoConRazas.IdRaza)
                 {
-                    filasAfectadas += ClsManejadoraBL.actualizarRazaCaballoBL(caballoConRazas.IdCaballo, caballoConRazas.RazaSeleccionada.IdRaza);
+                    try
+                    {
+                        filaActualAfectada = ClsManejadoraBL.actualizarRazaCaballoBL(caballoConRazas.IdCaballo, caballoConRazas.RazaSeleccionada.IdRaza);
+                    }
+                    catch (Exception e)
+                    {
+                        MuestraMensaje("Error", "No se ha podido actualizar el caballo, intentelo más tarde", "OK");
+                    }
+
+                    if (filaActualAfectada == 1)
+                    {
+                        caballoConRazas.IdRaza = caballoConRazas.RazaSeleccionada.IdRaza;
+                        filasTotalesAfectadas++;
+                    }
                 }  
             }
-            await Shell.Current.DisplayAlert("Actualizado", "Se ha/n actualizado " + filasAfectadas + " caballo/s", "OK");
+            mensajeCuerpo = "Se ha/n actualizado " + filasTotalesAfectadas + " caballo/s";
+            MuestraMensaje("Actualizado", mensajeCuerpo, "OK");
+        }
+        #endregion
+
+        #region Funciones
+        public async void MuestraMensaje(string mensajeTitulo, string mensajeCuerpo, string mensajeBoton)
+        {
+            await Shell.Current.DisplayAlert(mensajeTitulo, mensajeCuerpo, mensajeBoton);
         }
         #endregion
     }
