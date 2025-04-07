@@ -36,7 +36,7 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                //TODO: Poner mensaje, no funciona display alert
+                //TODO: Poner mensaje, pero no funciona display alert en la capa DAL y no sé como hacerlo
             }
 
             return numeroFilasAfectadas;
