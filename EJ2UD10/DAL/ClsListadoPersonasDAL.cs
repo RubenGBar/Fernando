@@ -36,7 +36,7 @@ namespace DAL
                         oPersona.Id = (int)miLector["Id"];
                         oPersona.Nombre = (string)miLector["Nombre"];
                         oPersona.Apellido = (string)miLector["Apellido"];
-                        oPersona.Email = miLector["Email"] != DBNull.Value ? (string)miLector["Email"] : string.Empty;
+                        oPersona.Email = (string)miLector["Email"];
                         oPersona.Telefono = (string)miLector["Telefono"];
                         oPersona.IdDepartamento = (int)miLector["IdDepartamento"];
                         oPersona.Dni = (int)miLector["Dni"];

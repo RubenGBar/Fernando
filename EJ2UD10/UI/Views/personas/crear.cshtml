@@ -1,44 +1,49 @@
-﻿@model UI.Models.VM.ClsPersonaConListaDepartamento
+﻿@model UI.Models.VM.ClsCrearPersonaConListaDepartamentos
 
 @{
-    ViewData["Title"] = "edit";
+    ViewData["Title"] = "crear";
 }
 
-<h1>Editar</h1>
+<h1>Crear</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="edit" method="post">
+        <form asp-action="crear">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" value="@Model.Nombre"/>
+                <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" value="@Model.Apellido"/>
+                <input asp-for="Apellido" class="form-control" />
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" value="@Model.Email"/>
+                <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Dni" class="control-label"></label>
-                <input asp-for="Dni" class="form-control" value="@Model.Dni"/>
+                <input asp-for="Dni" class="form-control" />
                 <span asp-validation-for="Dni" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Sexo" class="control-label"></label>
-                <input asp-for="Sexo" class="form-control" value="@Model.Sexo"/>
+                <input asp-for="Sexo" class="form-control" />
                 <span asp-validation-for="Sexo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" value="@Model.Telefono"/>
+                <input asp-for="Telefono" class="form-control" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,14 +53,10 @@
                 <span asp-validation-for="IdDepartamento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="listado">Volver a la lista</a>
 </div>
 
 @section Scripts {

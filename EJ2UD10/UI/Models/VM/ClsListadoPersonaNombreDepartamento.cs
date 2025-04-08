@@ -10,6 +10,7 @@ namespace UI.Models.VM
         public string NombreDepartamento { get; set; }
         #endregion
 
+        #region Constructores
         public ClsListadoPersonaNombreDepartamento(ClsPersona persona, List<ClsDepartamento> listaDepartamento)
         : base(persona.Id, persona.Nombre, persona.Apellido, persona.Email, persona.Telefono, persona.IdDepartamento, persona.Dni, persona.Sexo)
         {
@@ -22,5 +23,6 @@ namespace UI.Models.VM
                 ListadoCompleto.Add(persona);
             }
         }
+        #endregion
     }
 }
