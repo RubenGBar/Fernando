@@ -10,6 +10,11 @@ namespace UI.Models.VM
         #endregion
 
         #region Constructores
+        public ClsPersonaConListaDepartamento(List<ClsDepartamento> listaDepartamentos)
+        : base()
+        {
+            ListaDepartamentos = listaDepartamentos;
+        }
         public ClsPersonaConListaDepartamento(ClsPersona persona, List<ClsDepartamento> listaDepartamentos)
         : base(persona.Id, persona.Nombre, persona.Apellido, persona.Email, persona.Telefono, persona.IdDepartamento, persona.Dni, persona.Sexo)
         {
