@@ -20,6 +20,11 @@
             Nombre = nombre;
             Imagen = imagen;
         }
+
+        public Personaje(int id)
+        {
+            ID = id;
+        }
         #endregion
 
     }
