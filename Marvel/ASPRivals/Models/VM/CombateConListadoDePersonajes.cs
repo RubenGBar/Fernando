@@ -1,6 +1,5 @@
 ﻿using BL;
 using ENT;
-using DTO;
 
 namespace ASPRivals.Models.VM
 {

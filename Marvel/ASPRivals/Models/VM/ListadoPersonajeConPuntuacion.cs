@@ -1,5 +1,4 @@
 ﻿using BL;
-using ENT;
 using DTO;
 
 namespace ASPRivals.Models.VM
@@ -9,6 +8,7 @@ namespace ASPRivals.Models.VM
         #region Propiedades
         public List<PersonajeConPuntuacionTotal> listadoPersonajesConPuntuacion { get; set; }
         #endregion
+
         #region Constructores
         public ListadoPersonajeConPuntuacion()
         {

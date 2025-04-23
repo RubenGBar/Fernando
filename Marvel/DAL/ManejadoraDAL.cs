@@ -197,10 +197,13 @@ namespace DAL
             try
             {
                 listaCombatesComprobar = ListadosDAL.obtenerListadoCombatesDAL();
-                combateBuscado = listaCombatesComprobar.Find(pelea =>(
+                combateBuscado = listaCombatesComprobar.Find(pelea =>( (
                 pelea.IdCombatiente1 == combate.IdCombatiente1) && 
                 (pelea.IdCombatiente2 == combate.IdCombatiente2) && 
-                pelea.Fecha.Date == combate.Fecha.Date
+                pelea.Fecha.Date == combate.Fecha.Date) ||
+                ((pelea.IdCombatiente1 == combate.IdCombatiente2) &&
+                (pelea.IdCombatiente2 == combate.IdCombatiente1) &&
+                pelea.Fecha.Date == combate.Fecha.Date)
                 );
             }
             catch (Exception ex)

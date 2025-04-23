@@ -6,7 +6,9 @@
 
 <h1>Puntuar Combate</h1>
 
-<!-- Mostrar mensaje -->
+<p>@Html.ActionLink("Volver al Inicio", "Index")</p>
+<p>@Html.ActionLink("Ir a la Lista de Personajes", "ListaPersonajesConPuntos")</p>
+
 @if (ViewBag.mensaje != null)
 {
     <div class="alert @(ViewBag.exito == "true" ? "alert-success" : "alert-danger")" role="alert">
@@ -18,7 +20,7 @@
     <div class="form-group">
         <label for="IdCombatiente1">Combatiente 1</label>
         <select asp-for="IdCombatiente1" class="form-control" asp-items="@(new SelectList(Model.listadoPersonajesConPuntuacion, "ID", "Nombre", Model.IdCombatiente1))">
-            <option value="">-- Selecciona un personaje --</option>
+            <option value="@Model.IdCombatiente1">-- Selecciona un personaje --</option>
         </select>
     </div>
 
@@ -37,7 +39,7 @@
     <div class="form-group">
         <label for="IdCombatiente2">Combatiente 2</label>
         <select asp-for="IdCombatiente2" class="form-control" asp-items="@(new SelectList(Model.listadoPersonajesConPuntuacion, "ID", "Nombre", Model.IdCombatiente2))">
-            <option value="">-- Selecciona un personaje --</option>
+            <option value="@Model.IdCombatiente2">-- Selecciona un personaje --</option>
         </select>
     </div>
 
@@ -53,7 +55,4 @@
 
     <br />
     <button type="submit" class="btn btn-primary">Enviar Puntuación</button>
-    <p>
-        @Html.ActionLink("Volver a la lista de personajes", "Index", null, new { @class = "btn btn-secondary" })
-    </p>
 </form>
