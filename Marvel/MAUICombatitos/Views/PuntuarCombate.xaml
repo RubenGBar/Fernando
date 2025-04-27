@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MAUICombatitos.VM"
+             x:Class="MAUICombatitos.Views.PuntuarCombate"
+             Title="PuntuarCombate">
+
+    <ContentPage.BindingContext>
+        <vm:CombateConListadoHeroes />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto, *, Auto"
+              ColumnDefinitions="*,*"
+              Padding="20"
+              RowSpacing="20"
+              ColumnSpacing="20">
+
+            <CollectionView Grid.Row="0" Grid.Column="0"
+                            ItemsSource="{Binding ListadoPersonajes}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding Combatiente1}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5" CornerRadius="10" BorderColor="DarkGray" HasShadow="True">
+                            <Image Source="{Binding Imagen}"
+                                   Aspect="AspectFill"
+                                   HeightRequest="80"
+                                   WidthRequest="80" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <CollectionView Grid.Row="0" Grid.Column="1"
+                            ItemsSource="{Binding ListadoPersonajes}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding Combatiente2}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="5" CornerRadius="10" BorderColor="DarkGray" HasShadow="True">
+                            <Image Source="{Binding Imagen}"
+                                   Aspect="AspectFill"
+                                   HeightRequest="80"
+                                   WidthRequest="80" />
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <StackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center">
+                <Slider Minimum="1" Maximum="{Binding PuntuacionMaxima}" 
+                        Value="{Binding PuntuacionCombatiente1, Mode=TwoWay}" 
+                        ThumbColor="DarkBlue" 
+                        MaximumTrackColor="LightBlue" 
+                        MinimumTrackColor="DarkBlue"
+                        WidthRequest="200"/>
+                <Label Text="{Binding PuntuacionCombatiente1}" 
+                       FontSize="20" 
+                       HorizontalOptions="Center" 
+                       TextColor="Black" />
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                <Slider Minimum="1" Maximum="{Binding PuntuacionMaxima}" 
+                        Value="{Binding PuntuacionCombatiente2, Mode=TwoWay}" 
+                        ThumbColor="DarkRed" 
+                        MaximumTrackColor="LightCoral" 
+                        MinimumTrackColor="DarkRed"
+                        WidthRequest="200"/>
+                <Label Text="{Binding PuntuacionCombatiente2}" 
+                       FontSize="20" 
+                       HorizontalOptions="Center" 
+                       TextColor="Black" />
+            </StackLayout>
+
+            <Button Grid.Row="2" Grid.ColumnSpan="2"
+                    Text="Enviar Puntuación"
+                    Command="{Binding BotonGuardar}"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="20"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="50"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="Center"
+                    WidthRequest="250"/>
+        </Grid>
+    </ContentPage.Content>
+
+</ContentPage>
