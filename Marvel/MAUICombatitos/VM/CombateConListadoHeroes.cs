@@ -18,7 +18,7 @@ namespace MAUICombatitos.VM
             set 
             { 
                 combatiente1 = value;
-                BotonGuardar_CanExecute();
+                BotonGuardar.RaiseCanExecuteChanged();
             }
         }
         public Personaje Combatiente2
@@ -27,7 +27,7 @@ namespace MAUICombatitos.VM
             set 
             { 
                 combatiente2 = value;
-                BotonGuardar_CanExecute();
+                BotonGuardar.RaiseCanExecuteChanged();
             }
         }
         public List<Personaje> ListadoPersonajes { get; }
@@ -44,7 +44,7 @@ namespace MAUICombatitos.VM
             {
                 ListadoPersonajes = ListadosBL.obtenerListadoPersonajesBL();
                 PuntuacionMaxima = 5;
-                BotonGuardar = new DelegateCommand(BotonGuardar_Execute);
+                BotonGuardar = new DelegateCommand(BotonGuardar_Execute, BotonGuardar_CanExecute);
             }
             catch (Exception ex)
             {
@@ -71,10 +71,12 @@ namespace MAUICombatitos.VM
         {
             bool ejecutar = false;
 
-            if ((Combatiente1.ID != Combatiente2.ID) && (PuntuacionCombatiente1 != 0 && PuntuacionCombatiente2 != 0)
-                && (Combatiente1.ID != 0 && Combatiente2.ID != 0))
+            if ((Combatiente1.ID != Combatiente2.ID) && (PuntuacionCombatiente1 != 0 || PuntuacionCombatiente2 != 0))
             {
-                ejecutar = true;
+                if (Combatiente1.ID != 0 && Combatiente2.ID != 0)
+                {
+                    ejecutar = true;
+                }
             }
 
             return ejecutar;
