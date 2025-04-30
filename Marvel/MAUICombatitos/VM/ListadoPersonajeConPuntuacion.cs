@@ -1,9 +1,10 @@
 ﻿using BL;
 using DTO;
+using System.ComponentModel;
 
 namespace MAUICombatitos.VM
 {
-    public class ListadoPersonajeConPuntuacion
+    public class ListadoPersonajeConPuntuacion : INotifyPropertyChanged
     {
         #region Propiedades
         public List<PersonajeConPuntuacionTotal> ListadoPersonajesConPuntuacion { get; set; }
@@ -21,6 +22,7 @@ namespace MAUICombatitos.VM
                 MuestraMensaje("Error", "Hubo un error inesperado", "Aceptar");
             }
         }
+
         #endregion
 
         #region Funciones
@@ -33,6 +35,25 @@ namespace MAUICombatitos.VM
         public async void MuestraMensaje(string mensajeTitulo, string mensajeCuerpo, string mensajeBoton)
         {
             await Shell.Current.DisplayAlert(mensajeTitulo, mensajeCuerpo, mensajeBoton);
+        }
+
+        public async void recargarLista()
+        {
+            try
+            {
+                ListadoPersonajesConPuntuacion = ManejadoraBL.obtenerListadoPersonajesConPuntuacionTotalBL();
+                OnPropertyChanged(nameof(ListadoPersonajesConPuntuacion));
+            }
+            catch (Exception ex)
+            {
+                MuestraMensaje("Error", "Hubo un error inesperado al conectar con la BD, intentelo más tarde", "Aceptar");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }
