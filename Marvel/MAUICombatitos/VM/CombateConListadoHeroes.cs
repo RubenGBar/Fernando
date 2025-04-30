@@ -9,6 +9,8 @@ namespace MAUICombatitos.VM
         #region Atributos
         private Personaje combatiente1;
         private Personaje combatiente2;
+        private int puntuacionCombatiente1;
+        private int puntuacionCombatiente2;
         #endregion
 
         #region Propiedades
@@ -32,8 +34,24 @@ namespace MAUICombatitos.VM
         }
         public List<Personaje> ListadoPersonajes { get; }
         public int PuntuacionMaxima { get; }
-        public int PuntuacionCombatiente1 { get; set; }
-        public int PuntuacionCombatiente2 { get; set; }
+        public int PuntuacionCombatiente1 
+        {
+            get { return puntuacionCombatiente1; }
+            set
+            {
+                puntuacionCombatiente1 = value;
+                BotonGuardar.RaiseCanExecuteChanged();
+            }
+        }
+        public int PuntuacionCombatiente2
+        {
+            get { return puntuacionCombatiente2; }
+            set
+            {
+                puntuacionCombatiente2 = value;
+                BotonGuardar.RaiseCanExecuteChanged();
+            }
+        }
         public DelegateCommand BotonGuardar { get; }
         #endregion
 
@@ -71,11 +89,14 @@ namespace MAUICombatitos.VM
         {
             bool ejecutar = false;
 
-            if ((Combatiente1.ID != Combatiente2.ID) && (PuntuacionCombatiente1 != 0 || PuntuacionCombatiente2 != 0))
+            if (Combatiente1 != null && Combatiente2 != null)
             {
-                if (Combatiente1.ID != 0 && Combatiente2.ID != 0)
+                if ((Combatiente1.ID != Combatiente2.ID) && (PuntuacionCombatiente1 != 0 || PuntuacionCombatiente2 != 0))
                 {
-                    ejecutar = true;
+                    if (Combatiente1.ID != 0 && Combatiente2.ID != 0)
+                    {
+                        ejecutar = true;
+                    }
                 }
             }
 
