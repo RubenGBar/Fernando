@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI.Views.SeleccionarInvernadero"
+             Title="Seleccionar Datos">
+
+    <StackLayout Padding="20" Spacing="20">
+        <Label Text="Selecciona un Invernadero" />
+        <Picker ItemsSource="{Binding ListadoNombreInvernaderos}" 
+                SelectedItem="{Binding InvernaderoSeleccionado}" />
+
+        <Label Text="Selecciona una Fecha" />
+        <DatePicker Date="{Binding FechaSeleccionada}" />
+
+        <Button Text="Ver Datos" Clicked="OnVerDatosClicked" />
+    </StackLayout>
+
+</ContentPage>
