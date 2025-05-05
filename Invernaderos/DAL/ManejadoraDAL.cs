@@ -37,9 +37,9 @@ namespace DAL
                         oTemperaturas.Temp1 = (double)miLector["Temp1"];
                         oTemperaturas.Temp2 = (double)miLector["Temp2"];
                         oTemperaturas.Temp3 = (double)miLector["Temp3"];
-                        oTemperaturas.Humedad1 = (int)miLector["Humedad1"];
-                        oTemperaturas.Humedad2 = (int)miLector["Humedad2"];
-                        oTemperaturas.Humedad3 = (int)miLector["Humedad3"];
+                        oTemperaturas.Humedad1 = (double)miLector["Humedad1"];
+                        oTemperaturas.Humedad2 = (double)miLector["Humedad2"];
+                        oTemperaturas.Humedad3 = (double)miLector["Humedad3"];
                     }
                 }
                 miLector.Close();

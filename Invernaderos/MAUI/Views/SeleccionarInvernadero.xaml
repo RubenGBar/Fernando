@@ -8,7 +8,8 @@
         <Label Text="Selecciona un Invernadero" />
         <Picker ItemsSource="{Binding ListadoNombreInvernaderos}" 
                 SelectedItem="{Binding InvernaderoSeleccionado}" />
-
+        
+        <!-- TODO: Avisar de que no puede seleccionar una fecha porque no existen esos registros -->
         <Label Text="Selecciona una Fecha" />
         <DatePicker Date="{Binding FechaSeleccionada}" />
 

@@ -6,11 +6,11 @@ namespace MAUI.Views
 {
     public partial class SeleccionarInvernadero : ContentPage
     {
-        private TemperaturaVM vm;
+        private VM.SeleccionarInvernadero vm;
         public SeleccionarInvernadero()
         {
             InitializeComponent();
-            vm = new TemperaturaVM();
+            vm = new VM.SeleccionarInvernadero();
             vm.FechaSeleccionada = DateTime.Now; // Fecha actual por defecto en el DatePicker
             BindingContext = vm;
         }

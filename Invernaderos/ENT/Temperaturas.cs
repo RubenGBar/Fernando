@@ -8,9 +8,9 @@
         public double Temp1 { get; set; }
         public double Temp2 { get; set; }
         public double Temp3 { get; set; }
-        public int Humedad1 { get; set; }
-        public int Humedad2 { get; set; }
-        public int Humedad3 { get; set; }
+        public double Humedad1 { get; set; }
+        public double Humedad2 { get; set; }
+        public double Humedad3 { get; set; }
         #endregion
 
         #region Constructores
