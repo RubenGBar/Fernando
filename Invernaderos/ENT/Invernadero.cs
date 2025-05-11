@@ -18,6 +18,10 @@
             Id = id;
             Nombre = nombre;
         }
+        public Invernadero(int id)
+        {
+            Id = id;
+        }
         #endregion
 
     }

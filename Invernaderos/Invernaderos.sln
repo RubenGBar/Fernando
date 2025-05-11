@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAUI", "MAUI\MAUI.csproj", "{93CE5556-58FE-4070-87EF-174958240B63}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{CBCDD6F8-00E3-454A-B7A8-F3F0E166742E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{39A69329-C33D-47CE-AD90-C30F6C7585FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP", "ASP\ASP.csproj", "{0FAF0E1C-BE5E-4253-AAA4-EB0BD19BCD7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{39A69329-C33D-47CE-AD90-C30F6C7585FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39A69329-C33D-47CE-AD90-C30F6C7585FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39A69329-C33D-47CE-AD90-C30F6C7585FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FAF0E1C-BE5E-4253-AAA4-EB0BD19BCD7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FAF0E1C-BE5E-4253-AAA4-EB0BD19BCD7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FAF0E1C-BE5E-4253-AAA4-EB0BD19BCD7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FAF0E1C-BE5E-4253-AAA4-EB0BD19BCD7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

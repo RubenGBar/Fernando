@@ -1,0 +1,70 @@
+﻿@model ASP.Models.VM.TemperaturasConNombreInvernadero
+
+@{
+    ViewData["Title"] = "Datos del Invernadero";
+    string FormatTemp(float? temp) => temp.HasValue ? $"{temp:F1}°C" : "";
+    string FormatHum(float? hum) => hum.HasValue ? $"{hum}%": "";
+    float Normalize(float? val, float min, float max) => val.HasValue ? (val.Value - min) / (max - min) : 0;
+}
+
+<h2 style="text-align: center;">@Model.NombreInvernadero</h2>
+<h4 style="text-align: center;">@Model.Fecha.ToString("dd/MM/yyyy")</h4>
+
+
+<div style="@(Model.FechaCorrecta ? "" : "display:none")">
+    <table style="width: 100%; text-align: center; border-collapse: collapse; margin-top: 30px;">
+        <thead>
+            <tr>
+                <th>Hora</th>
+                <th>Temperatura</th>
+                <th>Humedad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var horas = new[] { "8:00", "16:00", "24:00" };
+                var temps = new double?[] { Model.Temp1, Model.Temp2, Model.Temp3 };
+                var hums = new double?[] { Model.Humedad1, Model.Humedad2, Model.Humedad3 };
+            }
+
+            @for (int i = 0; i < 3; i++)
+            {
+                <tr>
+                    <td>@horas[i]</td>
+                    <td>
+                        @if (!temps[i].HasValue)
+                        {
+                            <img src="@Model.URLInterrogacion" alt="Sin dato" width="30" />
+                        }
+                        else
+                        {
+                            var progreso = Normalize((float?)temps[i], 0, 60);
+                            <div style="width: 100px; background-color: lightgray;">
+                                <div style="width: @Math.Round(progreso * 100)% ; background-color: orange; height: 10px;"></div>
+                            </div>
+                            <div>@FormatTemp((float?)temps[i])</div>
+                        }
+                    </td>
+                    <td>
+                        @if (!hums[i].HasValue)
+                        {
+                            <img src="@Model.URLInterrogacion" alt="Sin dato" width="30" />
+                        }
+                        else
+                        {
+                            var progreso = Normalize((float?)hums[i], 0, 100);
+                            <div style="width: 100px; background-color: lightgray;">
+                                <div style="width: @Math.Round(progreso * 100)% ; background-color: deepskyblue; height: 10px;"></div>
+                            </div>
+                            <div>@FormatHum((float?)hums[i])</div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<p style="text-align: center; color: red; font-weight: bold; margin-top: 30px; @(Model.FechaCorrecta ? "display:none" : "")">
+    No hay datos disponibles para esta fecha.
+</p>

@@ -1,13 +1,11 @@
-﻿using ENT;
-using BL;
+﻿using BL;
 
-namespace MAUI.VM
+namespace ASP.Models.VM
 {
     public class SeleccionarInvernadero
     {
         #region Propiedades
         public List<string> ListadoNombreInvernaderos { get; }
-        // TODO: Avisar de que no puede seleccionar una fecha porque no existen esos registros
         public string NombreInvernaderoSeleccionado { get; set; }
         public DateTime FechaSeleccionada { get; set; }
         #endregion
@@ -16,6 +14,7 @@ namespace MAUI.VM
         public SeleccionarInvernadero()
         {
             ListadoNombreInvernaderos = ListadosBL.obtenerListadoNombreInvernaderosBL();
+            FechaSeleccionada = DateTime.Now;
         }
         #endregion
     }

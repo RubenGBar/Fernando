@@ -17,10 +17,10 @@ namespace MAUI.Views
 
         private async void OnVerDatosClicked(object sender, EventArgs e)
         {
-            int idInvernadero = ManejadoraBL.obtenerIdInvernaderoPorNombreDAL(vm.InvernaderoSeleccionado);
+            int idInvernadero = ManejadoraBL.obtenerIdInvernaderoPorNombreDAL(vm.NombreInvernaderoSeleccionado);
             Temperaturas temperaturasEnviar = ManejadoraBL.obtenerTemperaturasInvernaderoBL(idInvernadero, vm.FechaSeleccionada.Date);
 
-            TemperaturaConNombreInvernadero temperaturasConNombreInvernadero = new TemperaturaConNombreInvernadero(temperaturasEnviar, vm.InvernaderoSeleccionado);
+            TemperaturaConNombreInvernadero temperaturasConNombreInvernadero = new TemperaturaConNombreInvernadero(temperaturasEnviar, vm.NombreInvernaderoSeleccionado);
 
             await Navigation.PushAsync(new MostrarDatos(temperaturasConNombreInvernadero));
         }

@@ -18,7 +18,7 @@
         {
 
         }
-        public Temperaturas(int idInvernadero, DateTime fecha, double temp1, double temp2, double temp3, int humedad1, int humedad2, int humedad3)
+        public Temperaturas(int idInvernadero, DateTime fecha, double temp1, double temp2, double temp3, double humedad1, double humedad2, double humedad3)
         {
             IdInvernadero = idInvernadero;
             Fecha = fecha;
