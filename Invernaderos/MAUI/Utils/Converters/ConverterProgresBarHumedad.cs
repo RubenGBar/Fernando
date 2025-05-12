@@ -12,17 +12,18 @@ namespace MAUI.Utils.Converters
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            double hum = 0;
+            double resultado = 0;
+            double min = 0;
+            double max = 100;
 
-            if (value != null)
+            if (value is double hum)
             {
-                hum = (double)value / 100.0;
+                resultado = (hum - min) / (max - min);
             }
 
-            return hum;
+            return resultado;
         }
 
         /// <summary>
@@ -33,7 +34,6 @@ namespace MAUI.Utils.Converters
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return value;
