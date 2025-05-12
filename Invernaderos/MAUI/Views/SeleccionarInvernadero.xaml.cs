@@ -17,7 +17,7 @@ namespace MAUI.Views
 
         private async void OnVerDatosClicked(object sender, EventArgs e)
         {
-            int idInvernadero = ManejadoraBL.obtenerIdInvernaderoPorNombreDAL(vm.NombreInvernaderoSeleccionado);
+            int idInvernadero = ManejadoraBL.obtenerIdInvernaderoPorNombreBL(vm.NombreInvernaderoSeleccionado);
             Temperaturas temperaturasEnviar = ManejadoraBL.obtenerTemperaturasInvernaderoBL(idInvernadero, vm.FechaSeleccionada.Date);
 
             TemperaturaConNombreInvernadero temperaturasConNombreInvernadero = new TemperaturaConNombreInvernadero(temperaturasEnviar, vm.NombreInvernaderoSeleccionado);

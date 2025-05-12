@@ -25,7 +25,7 @@ namespace BL
         /// </summary>
         /// <param name="NombreInvernadero"> Nombre del invernadero a buscar </param>
         /// <returns> Las temperaturas del invernadero obtenidos de la base de datos </returns>
-        public static int obtenerIdInvernaderoPorNombreDAL(string NombreInvernadero)
+        public static int obtenerIdInvernaderoPorNombreBL(string NombreInvernadero)
         {
             return ManejadoraDAL.obtenerIdInvernaderoPorNombreDAL(NombreInvernadero);
         }

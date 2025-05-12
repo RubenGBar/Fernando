@@ -31,10 +31,26 @@ namespace ASP.Controllers
         {
             try
             {
-                int idInvernadero = ManejadoraBL.obtenerIdInvernaderoPorNombreDAL(vm.NombreInvernaderoSeleccionado);
+                bool? fechaCorrecta = false;
+                TemperaturasConNombreInvernadero temperaturasVM;
+                Temperaturas temperaturasEnviar;
+                int idInvernadero = ManejadoraBL.obtenerIdInvernaderoPorNombreBL(vm.NombreInvernaderoSeleccionado);
 
-                Temperaturas temperaturasEnviar = ManejadoraBL.obtenerTemperaturasInvernaderoBL(idInvernadero, vm.FechaSeleccionada);
-                TemperaturasConNombreInvernadero temperaturasVM = new TemperaturasConNombreInvernadero(temperaturasEnviar, vm.NombreInvernaderoSeleccionado);
+                // Compruebo que la fecha sea correcta
+                List<DateTime> fechas = new List<DateTime>();
+                fechas = ListadosBL.obtenerListadoFechasBL(idInvernadero);
+                fechaCorrecta = fechas.Contains(vm.FechaSeleccionada.Date);
+
+                // Según si la fecha es correcta envío a la vista datos o no para que los muestre
+                if (fechaCorrecta != null && fechaCorrecta == true)
+                {
+                    temperaturasEnviar = ManejadoraBL.obtenerTemperaturasInvernaderoBL(idInvernadero, vm.FechaSeleccionada);
+                    temperaturasVM = new TemperaturasConNombreInvernadero(temperaturasEnviar, vm.NombreInvernaderoSeleccionado);
+                }
+                else
+                {
+                    temperaturasVM = new TemperaturasConNombreInvernadero(false, vm.FechaSeleccionada);
+                }
 
                 return View("MostrarDatos", temperaturasVM);
             }

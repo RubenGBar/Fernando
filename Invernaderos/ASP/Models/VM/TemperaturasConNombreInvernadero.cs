@@ -26,6 +26,12 @@ namespace ASP.Models.VM
             fechas = ListadosBL.obtenerListadoFechasBL(temperatura.IdInvernadero);
             FechaCorrecta = fechas.Contains(temperatura.Fecha.Date);
         }
+        public TemperaturasConNombreInvernadero(bool fechaCorrecta, DateTime fecha)
+        {
+            URLInterrogacion = "https://i.pinimg.com/736x/f7/c4/b5/f7c4b5fbf5ec5b2e77d263bf9e108736.jpg";
+            Fecha = fecha;
+            FechaCorrecta = fechaCorrecta;
+        }
         #endregion
     }
 }
