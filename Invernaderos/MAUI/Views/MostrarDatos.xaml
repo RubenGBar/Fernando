@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:MAUI.Utils.Converters"
              x:Class="MAUI.Views.MostrarDatos"
              Title="Datos del Invernadero">
+
+    <ContentPage.Resources>
+        <converters:ConverterProgresBarHumedad x:Key="convertirHumedad" />
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="25">
@@ -16,7 +21,7 @@
                   ColumnSpacing="20"
                   RowSpacing="15">
 
-                <!-- Columnas Tabla -->
+                <!-- Columnas de la Tabla -->
                 <Label Grid.Row="0" Grid.Column="1" Text="Temperatura" FontAttributes="Bold" HorizontalOptions="Center"/>
                 <Label Grid.Row="0" Grid.Column="2" Text="Humedad" FontAttributes="Bold" HorizontalOptions="Center"/>
 
@@ -26,14 +31,14 @@
                     <VerticalStackLayout>
                         <Image Source="interrogacion.png" HeightRequest="30" IsVisible="{Binding EsVisibleTemp1}" />
                         <ProgressBar Progress="{Binding ResultadoTemp1}" />
-                        <Label Text="{Binding Temp1, StringFormat='{}{0:F1}°C'}" IsVisible="{Binding Temp1, Converter={StaticResource HasValue}}" HorizontalOptions="Center" />
+                        <Label Text="{Binding Temp1, StringFormat='{0:F1}°C'}" IsVisible="{Binding Temp1, Converter={StaticResource HasValue}}" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </ContentView>
                 <ContentView Grid.Row="1" Grid.Column="2">
                     <VerticalStackLayout>
                         <Image Source="interrogacion.png" HeightRequest="30" IsVisible="{Binding EsVisibleHumedad1}" />
-                        <ProgressBar Progress="{Binding ResultadoHumedad1}" />
-                        <Label Text="{Binding Humedad1, StringFormat='{}{0}%'}" IsVisible="{Binding Humedad1, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
+                        <ProgressBar Progress="{Binding Humedad1, Converter={StaticResource convertirHumedad}}" />
+                        <Label Text="{Binding Humedad1, StringFormat='{0}%'}" IsVisible="{Binding Humedad1, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
                     </VerticalStackLayout>
                 </ContentView>
 
@@ -43,14 +48,14 @@
                     <VerticalStackLayout>
                         <Image Source="interrogacion.png" HeightRequest="30" IsVisible="{Binding EsVisibleTemp2}" />
                         <ProgressBar Progress="{Binding ResultadoTemp2}" />
-                        <Label Text="{Binding Temp2, StringFormat='{}{0:F1}°C'}" IsVisible="{Binding Temp2, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
+                        <Label Text="{Binding Temp2, StringFormat='{0:F1}°C'}" IsVisible="{Binding Temp2, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
                     </VerticalStackLayout>
                 </ContentView>
                 <ContentView Grid.Row="2" Grid.Column="2">
                     <VerticalStackLayout>
                         <Image Source="interrogacion.png" HeightRequest="30" IsVisible="{Binding EsVisibleHumedad2}" />
-                        <ProgressBar Progress="{Binding ResultadoHumedad2}" />
-                        <Label Text="{Binding Humedad2, StringFormat='{}{0}%'}" IsVisible="{Binding Humedad2, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
+                        <ProgressBar Progress="{Binding Humedad2, Converter={StaticResource convertirHumedad}}" />
+                        <Label Text="{Binding Humedad2, StringFormat='{0}%'}" IsVisible="{Binding Humedad2, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
                     </VerticalStackLayout>
                 </ContentView>
 
@@ -60,14 +65,14 @@
                     <VerticalStackLayout>
                         <Image Source="interrogacion.png" HeightRequest="30" IsVisible="{Binding EsVisibleTemp3}" />
                         <ProgressBar Progress="{Binding ResultadoTemp3}" />
-                        <Label Text="{Binding Temp3, StringFormat='{}{0:F1}°C'}" IsVisible="{Binding Temp3, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
+                        <Label Text="{Binding Temp3, StringFormat='{0:F1}°C'}" IsVisible="{Binding Temp3, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
                     </VerticalStackLayout>
                 </ContentView>
                 <ContentView Grid.Row="3" Grid.Column="2">
                     <VerticalStackLayout>
                         <Image Source="interrogacion.png" HeightRequest="30" IsVisible="{Binding EsVisibleHumedad3}" />
-                        <ProgressBar Progress="{Binding ResultadoHumedad3}" />
-                        <Label Text="{Binding Humedad3, StringFormat='{}{0}%'}" IsVisible="{Binding Humedad3, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
+                        <ProgressBar Progress="{Binding Humedad3, Converter={StaticResource convertirHumedad}}" />
+                        <Label Text="{Binding Humedad3, StringFormat='{0}%'}" IsVisible="{Binding Humedad3, Converter={StaticResource HasValue}}" HorizontalOptions="Center"  />
                     </VerticalStackLayout>
                 </ContentView>
             </Grid>

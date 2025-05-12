@@ -16,11 +16,8 @@ namespace MAUI.VM
         public bool EsVisibleTemp3 { get; }
         public double ResultadoTemp3 { get; }
         public bool EsVisibleHumedad1 { get; }
-        public double ResultadoHumedad1 { get; }
         public bool EsVisibleHumedad2 { get; }
-        public double ResultadoHumedad2 { get; }
         public bool EsVisibleHumedad3 { get; }
-        public double ResultadoHumedad3 { get; }
         public bool FechaCorrecta { get; }
         #endregion
 
@@ -34,13 +31,13 @@ namespace MAUI.VM
         {
             NombreInvernadero = nombreInvernadero;
             // Compruebo que las temperaturas estén entre los máximos rangos registrados en la Tierra para mostar o no la interrogación
-            EsVisibleTemp1 = temperatura.Temp1 < -90|| temperatura.Temp1 > 60;
-            EsVisibleTemp2 = temperatura.Temp2 < -90 || temperatura.Temp2 > 60;
-            EsVisibleTemp3 = temperatura.Temp3 < -90 || temperatura.Temp3 > 60;
+            EsVisibleTemp1 = temperatura.Temp1 > -90 && temperatura.Temp1 < 60;
+            EsVisibleTemp2 = temperatura.Temp2 > -90 && temperatura.Temp2 < 60;
+            EsVisibleTemp3 = temperatura.Temp3 > -90 && temperatura.Temp3 < 60;
             // Ccompruebo que la humedad esté entre 0 o 100 para mostar o no la interrogación
-            EsVisibleHumedad1 = temperatura.Humedad1 < 0 || temperatura.Humedad1 > 100;
-            EsVisibleHumedad2 = temperatura.Humedad2 < 0 || temperatura.Humedad2 > 100;
-            EsVisibleHumedad3 = temperatura.Humedad3 < 0 || temperatura.Humedad3 > 100;
+            EsVisibleHumedad1 = temperatura.Humedad1 > 0 && temperatura.Humedad1 < 100;
+            EsVisibleHumedad2 = temperatura.Humedad2 > 0 && temperatura.Humedad2 < 100;
+            EsVisibleHumedad3 = temperatura.Humedad3 > 0 && temperatura.Humedad3 < 100;
             
             List<DateTime> fechas = new List<DateTime>();
             fechas = ListadosBL.obtenerListadoFechasBL(temperatura.IdInvernadero);
@@ -48,62 +45,59 @@ namespace MAUI.VM
 
             if (EsVisibleTemp1)
             {
-                this.Temp1 = 0;
+                this.Temp1 = temperatura.Temp1;
+                ResultadoTemp1 = temperatura.Temp1 / 100;
             }
             else
             {
-                this.Temp1 = temperatura.Temp1;
-                ResultadoTemp1 = temperatura.Temp1 / 100;
+                this.Temp1 = 0;
             }
 
             if (EsVisibleTemp2)
             {
-                this.Temp2 = 0;
+                this.Temp2 = temperatura.Temp2;
+                ResultadoTemp2 = temperatura.Temp2 / 100;
             }
             else
             {
-                this.Temp2 = temperatura.Temp2;
-                ResultadoTemp2 = temperatura.Temp2 / 100;
+                this.Temp2 = 0;
             }
 
             if (EsVisibleTemp3)
             {
-                this.Temp3 = 0;
+                this.Temp3 = temperatura.Temp3;
+                ResultadoTemp3 = temperatura.Temp3 / 100;
             }
             else
             {
-                this.Temp3 = temperatura.Temp3;
-                ResultadoTemp3 = temperatura.Temp3 / 100;
+                this.Temp3 = 0;
             }
 
             if (EsVisibleHumedad1)
             {
-                this.Humedad1 = 0;
+                this.Humedad1 = temperatura.Humedad1;
             }
             else
             {
-                this.Humedad1 = temperatura.Humedad1;
-                ResultadoHumedad1 = temperatura.Humedad1 / 100;
+                this.Humedad1 = 0;
             }
 
             if (EsVisibleHumedad2)
             {
-                this.Humedad2 = 0;
+                this.Humedad2 = temperatura.Humedad2;
             }
             else
             {
-                this.Humedad2 = temperatura.Humedad2;
-                ResultadoHumedad2 = temperatura.Humedad2 / 100;
+                this.Humedad2 = 0;
             }
 
             if (EsVisibleHumedad3)
             {
-                this.Humedad3 = 0;
+                this.Humedad3 = temperatura.Humedad3;
             }
             else
             {
-                this.Humedad3 = temperatura.Humedad3;
-                ResultadoHumedad3 = temperatura.Humedad3 / 100;
+                this.Humedad3 = 0;
             }
         }
         #endregion

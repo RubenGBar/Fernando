@@ -7,7 +7,7 @@
     <StackLayout Padding="20" Spacing="20">
         <Label Text="Selecciona un Invernadero" />
         <Picker ItemsSource="{Binding ListadoNombreInvernaderos}" 
-                SelectedItem="{Binding InvernaderoSeleccionado}" />
+                SelectedItem="{Binding NombreInvernaderoSeleccionado}" />
         
         <!-- TODO: Avisar de que no puede seleccionar una fecha porque no existen esos registros -->
         <Label Text="Selecciona una Fecha" />
