@@ -57,7 +57,7 @@ namespace DAL
         /// Post: nada
         /// </summary>
         /// <returns>List<Invernadero></returns>
-        public static List<DateTime> obtenerListadoFechasDAL(int IdInvernadero)
+        public static List<DateTime> obtenerListadoFechasPorIdDAL(int IdInvernadero)
         {
             SqlConnection miConexion;
             SqlCommand miComando = new SqlCommand();

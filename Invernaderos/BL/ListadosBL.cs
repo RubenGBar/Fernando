@@ -21,9 +21,9 @@ namespace BL
         /// Post: nada
         /// </summary>
         /// <returns>List<Invernadero></returns>
-        public static List<DateTime> obtenerListadoFechasBL(int IdInvernadero)
+        public static List<DateTime> obtenerListadoFechasPorIdBL(int IdInvernadero)
         {
-            return ListadosDAL.obtenerListadoFechasDAL(IdInvernadero);
+            return ListadosDAL.obtenerListadoFechasPorIdDAL(IdInvernadero);
         }
     }
 }

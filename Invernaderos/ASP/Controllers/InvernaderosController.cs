@@ -29,6 +29,7 @@ namespace ASP.Controllers
         [HttpPost]
         public IActionResult SeleccionarInvernadero(SeleccionarInvernadero vm)
         {
+            IActionResult resultado = null;
             try
             {
                 bool? fechaCorrecta = false;
@@ -38,7 +39,7 @@ namespace ASP.Controllers
 
                 // Compruebo que la fecha sea correcta
                 List<DateTime> fechas = new List<DateTime>();
-                fechas = ListadosBL.obtenerListadoFechasBL(idInvernadero);
+                fechas = ListadosBL.obtenerListadoFechasPorIdBL(idInvernadero);
                 fechaCorrecta = fechas.Contains(vm.FechaSeleccionada.Date);
 
                 // Según si la fecha es correcta envío a la vista datos o no para que los muestre
@@ -52,24 +53,29 @@ namespace ASP.Controllers
                     temperaturasVM = new TemperaturasConNombreInvernadero(false, vm.FechaSeleccionada);
                 }
 
-                return View("MostrarDatos", temperaturasVM);
+                resultado = View("MostrarDatos", temperaturasVM);
             }
             catch (Exception ex) 
             {
-                return View("Error");
+                resultado = View("Error");
             }
+
+            return resultado;
         }
 
         public IActionResult MostrarDatos(TemperaturasConNombreInvernadero vm)
         {
+            IActionResult resultado = null;
             try
             {
-                return View(vm);
+                resultado = View(vm);
             }
             catch (Exception ex)
             {
-                return View("Error");
+                resultado = View("Error");
             }
+
+            return resultado;
         }
 
     }

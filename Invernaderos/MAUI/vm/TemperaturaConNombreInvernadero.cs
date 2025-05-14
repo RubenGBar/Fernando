@@ -36,7 +36,7 @@ namespace MAUI.VM
             EsVisibleIntHumedad3 = temperatura.Humedad3 < 0 || temperatura.Humedad3 > 100;
             
             List<DateTime> fechas = new List<DateTime>();
-            fechas = ListadosBL.obtenerListadoFechasBL(temperatura.IdInvernadero);
+            fechas = ListadosBL.obtenerListadoFechasPorIdBL(temperatura.IdInvernadero);
             FechaCorrecta = !fechas.Contains(temperatura.Fecha.Date);
 
             if (!EsVisibleIntTemp1)
