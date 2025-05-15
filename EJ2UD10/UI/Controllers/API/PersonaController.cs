@@ -60,7 +60,7 @@ namespace UI.Controllers.API
             return salida;
         }
 
-        // POST api/<PersonaController>
+        // POST api/<Persona>
         [HttpPost]
         public IActionResult Post(ClsPersona personaInsertar)
         {
@@ -86,7 +86,7 @@ namespace UI.Controllers.API
             return salida;
         }
 
-        // PUT api/<PersonaController>/5
+        // PUT api/<Persona>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, ClsPersona personaActualizar)
         {
@@ -95,7 +95,7 @@ namespace UI.Controllers.API
 
             try
             {
-                resultado = ClsManejadoraBL.actualizarPersonaBL(personaActualizar);
+                resultado = ClsManejadoraBL.actualizarPersonaBL(personaActualizar, id);
                 if (resultado)
                 {
                     salida = NotFound();
@@ -112,7 +112,7 @@ namespace UI.Controllers.API
             return salida;
         }
 
-        // DELETE api/<PersonaController>/5
+        // DELETE api/<Persona>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

@@ -21,10 +21,11 @@ namespace BL
         /// Función que llama a la capa DAL y actualiza una persona por su ID
         /// </summary>
         /// <param name="persona">Persona con los datos editados.</param>
+        /// <param name="idAntiguo">Id de la persona a actualizar.</param>
         /// <returns>True si se actualizó</returns>
-        public static bool actualizarPersonaBL(ClsPersona persona)
+        public static bool actualizarPersonaBL(ClsPersona persona, int idAntiguo)
         {
-            bool exito = ClsManejadoraDAL.actualizarPersonaDAL(persona);
+            bool exito = ClsManejadoraDAL.actualizarPersonaDAL(persona, idAntiguo);
             return exito;
         }
 

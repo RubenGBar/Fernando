@@ -6,7 +6,7 @@ namespace UI.Models.VM
     public class ClsPersonaConListaDepartamento : ClsPersona
     {
         #region Propiedades
-        public List<ClsDepartamento> ListaDepartamentos { get; set; }
+        public List<ClsDepartamento> ListaDepartamentos { get; }
         #endregion
 
         #region Constructores

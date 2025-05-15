@@ -72,11 +72,11 @@ namespace UI.Controllers
         /// <returns> Vuelve a la vista editar o la vista error si hubo algún error </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult edit(ClsPersona personaDeLaVista)
+        public IActionResult edit(ClsPersona personaDeLaVista, int idAntiguo)
         {
             try
             {
-                bool resultado = ClsManejadoraBL.actualizarPersonaBL(personaDeLaVista);
+                bool resultado = ClsManejadoraBL.actualizarPersonaBL(personaDeLaVista, idAntiguo);
 
                 if (!resultado)
                 {

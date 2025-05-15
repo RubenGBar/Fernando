@@ -54,8 +54,9 @@ namespace DAL
         /// Actualiza una persona en la base de datos por su ID.
         /// </summary>
         /// <param name="persona">Persona con los datos editados.</param>
+        /// <param name="idActualizar">Id de la persona a actualizar.</param>
         /// <returns>True si se actualizó</returns>
-        public static bool actualizarPersonaDAL(ClsPersona persona)
+        public static bool actualizarPersonaDAL(ClsPersona persona, int idActualizar)
         {
             bool exito = false;
             SqlConnection miConexion;
@@ -73,7 +74,7 @@ namespace DAL
                                       IdDepartamento = @IdDepartamento, 
                                       Dni = @Dni, 
                                       Sexo = @Sexo 
-                                      WHERE Id = @Id";
+                                      WHERE Id = @IdActualizar";
 
                 miComando.Parameters.AddWithValue("@Nombre", persona.Nombre);
                 miComando.Parameters.AddWithValue("@Apellido", persona.Apellido);
@@ -82,7 +83,7 @@ namespace DAL
                 miComando.Parameters.AddWithValue("@IdDepartamento", persona.IdDepartamento);
                 miComando.Parameters.AddWithValue("@Dni", persona.Dni);
                 miComando.Parameters.AddWithValue("@Sexo", persona.Sexo);
-                miComando.Parameters.AddWithValue("@Id", persona.Id);
+                miComando.Parameters.AddWithValue("@IdActualizar", idActualizar);
 
                 int filasAfectadas = miComando.ExecuteNonQuery();
                 exito = filasAfectadas > 0;
