@@ -3,7 +3,7 @@
     public class Puntuacion
     {
         #region Propiedades
-        public int Id { get; set; }
+        public int Id { get; }
         public string Nickname { get; set; }
         public int Puntos { get; set; }
         #endregion
@@ -12,6 +12,10 @@
         public Puntuacion()
         {
 
+        }
+        public Puntuacion(int id)
+        {
+            Id = id;
         }
         public Puntuacion(string nickname, int puntos)
         {

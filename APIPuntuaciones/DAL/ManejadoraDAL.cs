@@ -16,6 +16,7 @@ namespace DAL
             SqlConnection miConexion;
             SqlCommand miComando = new SqlCommand();
             Puntuacion oPuntuacion;
+            int id = 0;
             List<Puntuacion> listadoPersonas = new List<Puntuacion>();
 
             try
@@ -30,11 +31,13 @@ namespace DAL
                 {
                     while (miLector.Read())
                     {
-                        oPuntuacion = new Puntuacion();
                         if (miLector["Id"] != System.DBNull.Value)
                         {
-                            oPuntuacion.Id = (int)miLector["Id"];
+                            id = (int)miLector["Id"];
                         }
+
+                        oPuntuacion = new Puntuacion(id);
+
                         if (miLector["Nickname"] != System.DBNull.Value)
                         {
                             oPuntuacion.Nickname = (string)miLector["Nickname"];
