@@ -1,4 +1,4 @@
-﻿using ENT;
+﻿using DAL;
 using DTO;
 
 namespace DAL

@@ -9,9 +9,9 @@ namespace BL
         /// Función que llama a la capa DAL para obtener el listado de puntuaciones
         /// </summary>
         /// <returns></returns>
-        public static async Task<List<Puntuacion>> getPersonasBL()
+        public static async Task<List<Puntuacion>> obtenerListadoPuntuacionesBL()
         {
-            return await ListadosDAL.getPersonasDAL();
+            return await ListadosDAL.obtenerListadoPuntuacionesDAL();
         }
     }
 }

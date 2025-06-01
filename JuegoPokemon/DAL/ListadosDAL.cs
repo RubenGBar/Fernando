@@ -9,7 +9,7 @@ namespace DAL
         /// Función que llama a la API para obtener el listado de puntuaciones
         /// </summary>
         /// <returns></returns>
-        public static async Task<List<Puntuacion>> getPersonasDAL()
+        public static async Task<List<Puntuacion>> obtenerListadoPuntuacionesDAL()
         {
 
             //Pido la cadena de la Uri al método estático
