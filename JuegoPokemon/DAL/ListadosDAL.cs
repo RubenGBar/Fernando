@@ -9,7 +9,7 @@ namespace DAL
         /// Función que llama a la API para obtener el listado de puntuaciones
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Puntuacion>> getPersonasDAL()
+        public static async Task<List<Puntuacion>> getPersonasDAL()
         {
 
             //Pido la cadena de la Uri al método estático
@@ -30,8 +30,7 @@ namespace DAL
                 {
                     textoJsonRespuesta = await mihttpClient.GetStringAsync(miUri);
                     mihttpClient.Dispose();
-                    listadoPersonas =
-                    JsonConvert.DeserializeObject<List<Puntuacion>>(textoJsonRespuesta);
+                    listadoPersonas = JsonConvert.DeserializeObject<List<Puntuacion>>(textoJsonRespuesta);
 
                 }
 

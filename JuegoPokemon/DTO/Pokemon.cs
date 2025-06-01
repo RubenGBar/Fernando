@@ -1,4 +1,4 @@
-﻿namespace ENT
+﻿namespace DTO
 {
     public class Pokemon
     {
