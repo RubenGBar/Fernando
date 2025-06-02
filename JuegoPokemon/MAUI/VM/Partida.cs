@@ -11,7 +11,6 @@ namespace MAUI.VM
         private List<Pregunta> preguntas;
         private Pregunta preguntaActual;
         private string nickJugador;
-        private int cuentaAtras;
         private int ronda;
         private int puntos;
         #endregion
@@ -38,7 +37,7 @@ namespace MAUI.VM
                 preguntaActual = preguntas[ronda];
                 OnPropertyChanged(nameof(PreguntaActual));
                 */
-                return preguntaActual; 
+                return preguntas[ronda]; 
             }
         }
 
@@ -46,16 +45,6 @@ namespace MAUI.VM
         {
             get { return nickJugador; }
             set { nickJugador = value; }
-        }
-
-        public int CuentaAtras
-        {
-            get { return cuentaAtras; }
-            set 
-            { 
-                cuentaAtras = value;
-                OnPropertyChanged(nameof(CuentaAtras));
-            }
         }
 
         public int Ronda
@@ -90,8 +79,7 @@ namespace MAUI.VM
             {
                 preguntas.Add(new Pregunta());
             }
-            preguntaActual = preguntas[0];
-            cuentaAtras = 5;
+            preguntaActual = preguntas[ronda];
             ronda = 0;
             puntos = 0;
         }

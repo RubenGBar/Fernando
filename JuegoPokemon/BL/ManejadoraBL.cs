@@ -5,9 +5,14 @@ namespace BL
 {
     public class ManejadoraBL
     {
-        public static async Task<Pokemon> obtenerUnPokemonAleatorio()
+        /// <summary>
+        /// Funcion que llama a la capa DAL para obtener un pokemon por su ID.
+        /// </summary>
+        /// <param name="idPokemon"> ID del pokemon </param>
+        /// <returns></returns>
+        public static async Task<Pokemon> obtenerUnPokemonPorIDBL(int idPokemon)
         {
-            return await ManejadoraDAL.obtenerUnPokemonAleatorio();
+            return await ManejadoraDAL.obtenerUnPokemonPorIDDAL(idPokemon);
         }
     }
 }

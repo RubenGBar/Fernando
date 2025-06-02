@@ -11,6 +11,7 @@ namespace MAUI.Models
         private bool correcto;
         private Pokemon pokemonSeleccionado;
         private List<Pokemon> pokemonsIncorrectos;
+        private int tiempo;
         #endregion
 
         #region Propiedades
@@ -40,6 +41,15 @@ namespace MAUI.Models
             get { return pokemonsIncorrectos; }
         }
 
+        public int Tiempo
+        {
+            get { return tiempo; }
+            set 
+            { 
+                tiempo = value;
+                OnPropertyChanged(nameof(Tiempo));
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
@@ -47,20 +57,34 @@ namespace MAUI.Models
         public Pregunta()
         {
             List<int> idRepetidos = new List<int>();
+            pokemonAdivinar = new Pokemon();
+            pokemonsIncorrectos = new List<Pokemon>();
             int idAleatorio;
-            pokemonAdivinar = ManejadoraBL.obtenerUnPokemonAleatorio().Result;
             
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 do
                 {
                     idAleatorio = Random.Shared.Next(1, 1303);
                 } while (idRepetidos.Contains(idAleatorio) || idAleatorio == pokemonAdivinar.Id);
+
+                if (i == 0)
+                {
+                    pokemonAdivinar = ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio).Result;
+                } 
+                else
+                {
+                    pokemonsIncorrectos.Add(ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio).Result);
+                }
+
                 idRepetidos.Add(idAleatorio);
             }
-
+            tiempo = 5;
             correcto = false;
         }
+        #endregion
+
+        #region Funciones
         #endregion
 
         #region Notify
