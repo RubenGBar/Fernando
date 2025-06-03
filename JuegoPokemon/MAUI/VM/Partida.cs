@@ -1,6 +1,7 @@
-﻿using ENT;
-using BL;
+﻿using BL;
+using ENT;
 using MAUI.Models;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace MAUI.VM
@@ -8,7 +9,7 @@ namespace MAUI.VM
     public class Partida : INotifyPropertyChanged
     {
         #region Atributos
-        private List<Pregunta> preguntas;
+        private ObservableCollection<Pregunta> preguntas;
         private Pregunta preguntaActual;
         private string nickJugador;
         private int ronda;
@@ -16,7 +17,7 @@ namespace MAUI.VM
         #endregion
 
         #region Propiedades
-        public List<Pregunta> Preguntas
+        public ObservableCollection<Pregunta> Preguntas
         {
             get { return preguntas; }
         }
@@ -74,11 +75,22 @@ namespace MAUI.VM
         #region Constructores
         public Partida() 
         {
-            preguntas = new List<Pregunta>();
+            List<int> idPokemonAnteriores = new List<int>();
+            preguntas = new ObservableCollection<Pregunta>();
+            
             for (int i = 0; i < 20; i++)
             {
-                preguntas.Add(new Pregunta());
+                // Guardo los IDs de los Pokémon ya usados para evitar que se repitan en futuras preguntas
+                // Puede que reviente por nulos?
+                for (int j = 0; j < 4; j++)
+                {
+                    idPokemonAnteriores.Add(preguntaActual.PokemonsIncorrectos[i].Id);
+                }
+
+                preguntas.Add(new Pregunta(idPokemonAnteriores));
+
             }
+
             preguntaActual = preguntas[ronda];
             ronda = 0;
             puntos = 0;

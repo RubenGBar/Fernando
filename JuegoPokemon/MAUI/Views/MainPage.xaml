@@ -1,10 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI.Views.MainPage">
+             x:Class="MAUI.Views.MainPage"
+             Title="PokeQuiz">
 
     <ScrollView>
-        
+        <VerticalStackLayout Padding="20" Spacing="25" VerticalOptions="Center">
+
+            <Label Text="Bienvenido a PokeQuiz"
+                   FontSize="Medium"
+                   HorizontalOptions="Center" />
+
+            <Image Source="https://images.wikidexcdn.net/mwuploads/wikidex/3/33/latest/20180318190751/Logo_WikiDex.png"
+                   HeightRequest="100"
+                   WidthRequest="100"
+                   Aspect="AspectFit"
+                   BackgroundColor="LightGray"/>
+
+            <Button Text="Juego"
+                    Clicked="OnJuegoClicked"
+                    FontSize="Medium"
+                    HorizontalOptions="Center" />
+
+            <Button Text="Ranking"
+                    Clicked="OnRankingClicked"
+                    FontSize="Medium"
+                    HorizontalOptions="Center" />
+
+            <Button Text="Información"
+                    Clicked="OnInfoClicked"
+                    FontSize="Medium"
+                    HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>

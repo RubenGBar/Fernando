@@ -2,6 +2,7 @@
 using DTO;
 using ENT;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace DAL
 {
@@ -15,8 +16,8 @@ namespace DAL
         public static async Task<Pokemon> obtenerUnPokemonPorIDDAL(int idPokemon)
         {
             //Pido la cadena de la Uri al método estático
-            string miCadenaUrl = Conexion.obtenerURIPuntuacion();
-            Uri miUri = new Uri($"{miCadenaUrl}Puntuacion");
+            string miCadenaUrl = Conexion.obtenerURIPokemon();
+            Uri miUri = new Uri($"{miCadenaUrl}{idPokemon}");
             Pokemon pokemonDevolver = new Pokemon();
             HttpClient mihttpClient;
             HttpResponseMessage miCodigoRespuesta;
@@ -44,6 +45,38 @@ namespace DAL
             }
 
             return pokemonDevolver;
-        } 
+        }
+
+        /// <summary>
+        /// Funcion que llama a mi API de puntuaciones para guardar una partida
+        /// </summary>
+        /// <param name="idPokemon"> ID del pokemon </param>
+        /// <returns></returns>
+        public async Task<HttpStatusCode> insertaPersonaDAL(Puntuacion puntuacionGuardar)
+        {
+
+            HttpClient mihttpClient = new HttpClient();
+            string datos;
+            HttpContent contenido;
+            string miCadenaUrl = Conexion.obtenerURIPuntuacion();
+            Uri miUri = new Uri($"{miCadenaUrl}Puntuacion");
+
+            //Usaremos el Status de la respuesta para comprobar si ha insertado
+            HttpResponseMessage miRespuesta = new HttpResponseMessage();
+
+            try
+            {
+                datos = JsonConvert.SerializeObject(puntuacionGuardar);
+                contenido = new StringContent(datos, System.Text.Encoding.UTF8, "application/json");
+                miRespuesta = await mihttpClient.PostAsync(miUri, contenido);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return miRespuesta.StatusCode;
+        }
+
     }
 }
