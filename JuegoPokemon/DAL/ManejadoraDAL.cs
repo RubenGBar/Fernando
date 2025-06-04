@@ -18,7 +18,7 @@ namespace DAL
             //Pido la cadena de la Uri al método estático
             string miCadenaUrl = Conexion.obtenerURIPokemon();
             Uri miUri = new Uri($"{miCadenaUrl}{idPokemon}");
-            Pokemon pokemonDevolver = new Pokemon();
+            Pokemon pokemonDevolver = new Pokemon(idPokemon);
             HttpClient mihttpClient;
             HttpResponseMessage miCodigoRespuesta;
             string textoJsonRespuesta;
@@ -33,7 +33,7 @@ namespace DAL
                 {
                     textoJsonRespuesta = await mihttpClient.GetStringAsync(miUri);
                     mihttpClient.Dispose();
-                    pokemonDevolver = JsonConvert.DeserializeObject<Pokemon>(textoJsonRespuesta);
+                    pokemonDevolver.Nombre = JsonConvert.DeserializeObject<Pokemon>(textoJsonRespuesta).Nombre;
                     pokemonDevolver.Foto = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"+ idPokemon +".png";
 
                 }

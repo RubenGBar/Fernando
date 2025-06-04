@@ -1,6 +1,7 @@
 ﻿using BL;
 using ENT;
 using MAUI.Models;
+using MAUI.VM.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -14,6 +15,10 @@ namespace MAUI.VM
         private string nickJugador;
         private int ronda;
         private int puntos;
+        private IDispatcher dispatcher;
+        private bool mostrarJuego;
+        private bool mostrarInstrucciones;
+        private DelegateCommand miCommand;
         #endregion
 
         #region Propiedades
@@ -26,19 +31,43 @@ namespace MAUI.VM
         {
             get 
             {
-                /*if (preguntas[ronda].Correcto)
-                {
-                    ronda++;
-                }
-                else if (cuentaAtras == 0)
-                {
-                    ronda++;
-                }
-
-                preguntaActual = preguntas[ronda];
+                return preguntaActual; 
+            }
+            set 
+            { 
+                preguntaActual = value; 
                 OnPropertyChanged(nameof(PreguntaActual));
-                */
-                return preguntas[ronda]; 
+            }
+        }
+
+        public IDispatcher Dispatcher
+        {
+            get { return dispatcher; }
+            set { dispatcher = value; }
+        }
+
+        public DelegateCommand MiCommand
+        {
+            get { return miCommand; }
+        }
+
+        public bool MostrarJuego
+        {
+            get { return mostrarJuego; }
+            set 
+            { 
+                mostrarJuego = value; 
+                OnPropertyChanged(nameof(MostrarJuego)); 
+            }
+        }
+
+        public bool MostrarInstrucciones
+        {
+            get { return mostrarInstrucciones; }
+            set 
+            { 
+                mostrarInstrucciones = value; 
+                OnPropertyChanged(nameof(MostrarInstrucciones)); 
             }
         }
 
@@ -75,25 +104,110 @@ namespace MAUI.VM
         #region Constructores
         public Partida() 
         {
-            List<int> idPokemonAnteriores = new List<int>();
             preguntas = new ObservableCollection<Pregunta>();
-            
+
+            mostrarInstrucciones = true;
+
+            miCommand = new DelegateCommand(() => EmpezarPartida());
+
+        }
+        #endregion
+
+        #region Funciones
+
+        private async Task PrepararPartida(List<int> idPokemonAnteriores)
+        {
+            await preguntaActual.prepararPartida(idPokemonAnteriores);
+        }
+
+        private async Task EmpezarPartida()
+        {
+            int indicePregunta = 0;
+            List<int> idPokemonAnteriores = new List<int>();
+            bool seguir = true;
+            bool preguntaRespondida = false;
+            ronda = 1;
+            puntos = 0;
+
             for (int i = 0; i < 20; i++)
             {
-                // Guardo los IDs de los Pokémon ya usados para evitar que se repitan en futuras preguntas
-                // Puede que reviente por nulos?
-                for (int j = 0; j < 4; j++)
+                if (preguntaActual != null) 
                 {
-                    idPokemonAnteriores.Add(preguntaActual.PokemonsIncorrectos[i].Id);
+                    // Guardo los IDs de los Pokémon ya usados para evitar que se repitan en futuras preguntas
+                    for (int j = 0; j < 4; j++)
+                    {
+                        idPokemonAnteriores.Add(preguntaActual.PokemonsIncorrectos[i].Id);
+                    }
                 }
 
-                preguntas.Add(new Pregunta(idPokemonAnteriores));
+                preguntas.Add(new Pregunta());
+
+                if (preguntas.Any())
+                {
+                    preguntaActual = preguntas[indicePregunta];
+                }
+
+                await PrepararPartida(idPokemonAnteriores);
 
             }
 
-            preguntaActual = preguntas[ronda];
-            ronda = 0;
-            puntos = 0;
+            OnPropertyChanged(nameof(ronda));
+            mostrarJuego = true;
+
+            mostrarInstrucciones = !mostrarInstrucciones;
+
+            if (!mostrarInstrucciones)
+            {
+                mostrarJuego = true;
+            }
+
+            Dispatcher.StartTimer(TimeSpan.FromSeconds(1.5), () =>
+            {
+                if (indicePregunta >= preguntas.Count())
+                {
+                    seguir = false;
+
+                }
+                else
+                {
+
+                    if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida && preguntaActual.PokemonSeleccionado == PreguntaActual.PokemonAdivinar)
+                    {
+                        puntos += preguntaActual.Tiempo;
+                        OnPropertyChanged(nameof(Puntos));
+                        preguntaRespondida = true;
+                    }
+
+                    if (preguntaActual.Tiempo == 0 || preguntaRespondida)
+                    {
+                        indicePregunta++;
+                        ronda++;
+                        OnPropertyChanged(nameof(ronda));
+
+                        if (indicePregunta >= preguntas.Count())
+                        {
+                            seguir = false;
+                        }
+                        else
+                        {
+                            preguntaActual = preguntas[indicePregunta];
+                            OnPropertyChanged(nameof(PreguntaActual));
+                        }
+
+                        preguntaActual.Tiempo = 5;
+                        preguntaRespondida = false;
+
+                    }
+                    else
+                    {
+                        preguntaActual.Tiempo--;
+                    }
+
+                }
+
+                return seguir;
+            });
+
         }
         #endregion
 
