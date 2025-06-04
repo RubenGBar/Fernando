@@ -63,11 +63,13 @@ namespace MAUI.Models
         #endregion
 
         #region Funciones
-        public async Task prepararPartida(List<int> idPokemonAnteriores)
+        public static async Task prepararPartida(Pregunta preguntaRellenar, List<int> idPokemonAnteriores)
         {
             List<int> idRepetidos = new List<int>();
-            pokemonAdivinar = new Pokemon();
-            pokemonsIncorrectos = new ObservableCollection<Pokemon>();
+            preguntaRellenar.pokemonAdivinar = new Pokemon();
+            preguntaRellenar.pokemonsIncorrectos = new ObservableCollection<Pokemon>();
+            preguntaRellenar.pokemonClickables = new ObservableCollection<Pokemon>();
+            Pokemon pokemonIncorrecto = new Pokemon();
             int idAleatorio;
 
             if (idPokemonAnteriores.Any()) 
@@ -78,20 +80,20 @@ namespace MAUI.Models
                     {
                         idAleatorio = Random.Shared.Next(1, 1026);
                         // Puede que reviente por nulos?
-                    } while (idPokemonAnteriores.Contains(idAleatorio) && (idRepetidos.Contains(idAleatorio) || idAleatorio == pokemonAdivinar.Id));
+                    } while (idPokemonAnteriores.Contains(idAleatorio) && (idRepetidos.Contains(idAleatorio) || idAleatorio == preguntaRellenar.pokemonAdivinar.Id));
 
                     if (i == 0)
                     {
                         // Tengo que llamar a un método asíncrono desde el constructor y no sé como hacerlo
-                        pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                        preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                        preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
                     }
                     else
                     {
-                        pokemonsIncorrectos.Add(await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio));
+                        pokemonIncorrecto = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                        preguntaRellenar.pokemonsIncorrectos.Add(pokemonIncorrecto);
+                        preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
                     }
-
-                    pokemonClickables.Add(pokemonAdivinar);
-                    pokemonClickables.Add(pokemonsIncorrectos[i]);
 
                     idRepetidos.Add(idAleatorio);
                 }
@@ -104,30 +106,32 @@ namespace MAUI.Models
                     {
                         idAleatorio = Random.Shared.Next(1, 1026);
                         // Puede que reviente por nulos?
-                    } while (idRepetidos.Contains(idAleatorio) || idAleatorio == pokemonAdivinar.Id);
+                    } while (idRepetidos.Contains(idAleatorio) || idAleatorio == preguntaRellenar.pokemonAdivinar.Id);
 
                     if (i == 0)
                     {
                         // Tengo que llamar a un método asíncrono desde el constructor y no sé como hacerlo
-                        pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
-                        pokemonClickables.Add(pokemonAdivinar);
+                        preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                        preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
                     }
                     else
                     {
-                        pokemonsIncorrectos.Add(await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio));
-                        pokemonClickables.Add(pokemonsIncorrectos[i]);
+                        pokemonIncorrecto = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                        preguntaRellenar.pokemonsIncorrectos.Add(pokemonIncorrecto);
+                        preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
                     }
 
                     idRepetidos.Add(idAleatorio);
                 }
             }
 
-                shuffle(pokemonClickables);
+            shuffle(preguntaRellenar.pokemonClickables);
 
-            tiempo = 5;
+            preguntaRellenar.tiempo = 5;
 
         }
-        private void shuffle(ObservableCollection<Pokemon> listaMezclar)
+
+        private static void shuffle(ObservableCollection<Pokemon> listaMezclar)
         {
             Random rnd = new Random();
             int indice = listaMezclar.Count();

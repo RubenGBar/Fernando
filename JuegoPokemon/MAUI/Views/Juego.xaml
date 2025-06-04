@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MAUI.VM" 
-             x:Class="MAUI.Views.Juego"
-             Title="Juego">
+             x:Class="MAUI.Views.Juego">
 
     <ContentPage.BindingContext>
         <vm:Partida />
@@ -21,6 +20,10 @@
             <StackLayout HorizontalOptions="Center"
                          VerticalOptions="Center"
                          Spacing="20">
+                <Label Text="Ojo Cuidado"
+                       FontSize="Large"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
                 <Label Text="Tednrás 5 segundos para responder cada pregunta, así que estate atento, obtendrás más puntos cuanto más rápido respondas a las preguntas. Mucha Suerte :)"
                        FontAttributes="Bold"
                        FontSize="18"
@@ -29,6 +32,18 @@
                         FontSize="30"
                         Command="{Binding MiCommand}"
                         HorizontalOptions="Center"/>
+                <ActivityIndicator IsRunning="{Binding Cargando}"
+                   IsVisible="{Binding Cargando}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Color="Black"
+                   HeightRequest="40"/>
+                <Label Text="Cargando..."
+                        IsVisible="{Binding Cargando}"
+                        FontSize="Small"
+                        TextColor="Gray"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
             </StackLayout>
         </Grid>
 
@@ -85,7 +100,7 @@
 
                 <CollectionView ItemsSource="{Binding PreguntaActual.PokemonClickables}"
                                 SelectionMode="Single"
-                                SelectedItem="{Binding PersonajeSelected}"
+                                SelectedItem="{Binding PreguntaActual.PokemonSeleccionado}"
                                 x:Name="cvPokemons">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical"

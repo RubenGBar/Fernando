@@ -1,9 +1,9 @@
-﻿using BL;
-using ENT;
+﻿using DTO;
 using MAUI.Models;
 using MAUI.VM.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace MAUI.VM
 {
@@ -19,12 +19,23 @@ namespace MAUI.VM
         private bool mostrarJuego;
         private bool mostrarInstrucciones;
         private DelegateCommand miCommand;
+        private bool cargando;
         #endregion
 
         #region Propiedades
         public ObservableCollection<Pregunta> Preguntas
         {
             get { return preguntas; }
+        }
+
+        public bool Cargando
+        {
+            get { return cargando; }
+            set 
+            { 
+                cargando = value; 
+                OnPropertyChanged(nameof(Cargando)); 
+            }
         }
 
         public Pregunta PreguntaActual
@@ -114,19 +125,16 @@ namespace MAUI.VM
         #endregion
 
         #region Funciones
-
-        private async Task PrepararPartida(List<int> idPokemonAnteriores)
-        {
-            await preguntaActual.prepararPartida(idPokemonAnteriores);
-        }
-
         private async Task EmpezarPartida()
         {
+            Cargando = true;
+
             int indicePregunta = 0;
             List<int> idPokemonAnteriores = new List<int>();
+            int idRepetido = 0;
+            Pregunta nuevaPregunta;
             bool seguir = true;
             bool preguntaRespondida = false;
-            ronda = 1;
             puntos = 0;
 
             for (int i = 0; i < 20; i++)
@@ -134,31 +142,45 @@ namespace MAUI.VM
                 if (preguntaActual != null) 
                 {
                     // Guardo los IDs de los Pokémon ya usados para evitar que se repitan en futuras preguntas
-                    for (int j = 0; j < 4; j++)
+                    foreach (Pokemon pokemonRepetido in preguntaActual.PokemonClickables)
                     {
-                        idPokemonAnteriores.Add(preguntaActual.PokemonsIncorrectos[i].Id);
+                        idRepetido = pokemonRepetido.Id;
+                        idPokemonAnteriores.Add(idRepetido);
                     }
                 }
 
-                preguntas.Add(new Pregunta());
+                nuevaPregunta = new Pregunta();
 
-                if (preguntas.Any())
-                {
-                    preguntaActual = preguntas[indicePregunta];
-                }
+                await Pregunta.prepararPartida(nuevaPregunta, idPokemonAnteriores);
 
-                await PrepararPartida(idPokemonAnteriores);
+                preguntas.Add(nuevaPregunta);
 
             }
 
+            Cargando = false;
+            //OnPropertyChanged(nameof(Cargando));
+
+            // Puede que esto no haga falta
             OnPropertyChanged(nameof(ronda));
-            mostrarJuego = true;
+            MostrarJuego = true;
 
-            mostrarInstrucciones = !mostrarInstrucciones;
+            MostrarInstrucciones = !mostrarInstrucciones;
 
-            if (!mostrarInstrucciones)
+            if (!MostrarInstrucciones)
             {
-                mostrarJuego = true;
+                MostrarJuego = true;
+            }
+
+            if (preguntas.Any())
+            {
+                preguntaActual = preguntas[indicePregunta];
+                preguntaActual.Tiempo = 5;
+
+                OnPropertyChanged(nameof(PreguntaActual));
+
+                Ronda = 1;
+                OnPropertyChanged(nameof(Ronda));
+
             }
 
             Dispatcher.StartTimer(TimeSpan.FromSeconds(1.5), () =>
@@ -166,12 +188,11 @@ namespace MAUI.VM
                 if (indicePregunta >= preguntas.Count())
                 {
                     seguir = false;
-
                 }
                 else
                 {
 
-                    if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida && preguntaActual.PokemonSeleccionado == PreguntaActual.PokemonAdivinar)
+                    if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida && preguntaActual.PokemonSeleccionado == preguntaActual.PokemonAdivinar)
                     {
                         puntos += preguntaActual.Tiempo;
                         OnPropertyChanged(nameof(Puntos));
@@ -181,7 +202,7 @@ namespace MAUI.VM
                     if (preguntaActual.Tiempo == 0 || preguntaRespondida)
                     {
                         indicePregunta++;
-                        ronda++;
+                        Ronda++;
                         OnPropertyChanged(nameof(ronda));
 
                         if (indicePregunta >= preguntas.Count())

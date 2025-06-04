@@ -1,13 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace DTO
 {
     public class Pokemon
     {
         #region Propiedades
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public int Id { get; }
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Nombre { get; set; }
         public string Foto { get; set; }
         #endregion
