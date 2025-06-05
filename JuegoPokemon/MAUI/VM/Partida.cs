@@ -3,7 +3,6 @@ using MAUI.Models;
 using MAUI.VM.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace MAUI.VM
 {
@@ -217,6 +216,11 @@ namespace MAUI.VM
 
                         preguntaActual.Tiempo = 5;
                         preguntaRespondida = false;
+
+                        if (Ronda >= 20)
+                        {
+                            Ronda = 20;
+                        }
 
                     }
                     else
