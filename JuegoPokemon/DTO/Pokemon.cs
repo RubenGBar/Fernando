@@ -7,8 +7,11 @@ namespace DTO
         #region Propiedades
         [JsonProperty("id")]
         public int Id { get; }
-        [JsonProperty("name")]
-        public string Nombre { get; set; }
+        /// <summary>
+        /// Subclase con el nombre del pokemon, ya que la API lo guarda en un array y no en un string directamente
+        /// </summary>
+        [JsonProperty("species")]
+        public Especie Especie { get; set; }
         public string Foto { get; set; }
         #endregion
 
@@ -21,15 +24,15 @@ namespace DTO
         {
             Id = id;
         }
-        public Pokemon(int id, string nombre)
+        public Pokemon(int id, Especie especie)
         {
             Id = id;
-            Nombre = nombre;
+            Especie = especie;
         }
-        public Pokemon(int id, string nombre, string foto)
+        public Pokemon(int id, Especie especie, string foto)
         {
             Id = id;
-            Nombre = nombre;
+            Especie = especie;
             Foto = foto;
         }
         #endregion

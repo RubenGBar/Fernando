@@ -93,9 +93,10 @@
                          VerticalOptions="Center"
                          Spacing="20">
 
-                <Label Text="{Binding PreguntaActual.PokemonAdivinar.Nombre}"
+                <Label Text="{Binding PreguntaActual.PokemonAdivinar.Especie.Nombre}"
                        FontAttributes="Bold"
                        FontSize="24"
+                       TextTransform="Uppercase"
                        HorizontalOptions="Center" />
 
                 <CollectionView ItemsSource="{Binding PreguntaActual.PokemonClickables}"
