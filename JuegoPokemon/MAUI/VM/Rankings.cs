@@ -15,9 +15,13 @@ namespace MAUI.VM
         {
             get 
             {
-                OnPropertyChanged(nameof(LitadoPuntuaciones));
                 return litadoPuntuaciones;
-            } 
+            }
+            private set 
+            { 
+                litadoPuntuaciones = value; 
+                OnPropertyChanged(nameof(LitadoPuntuaciones));
+            }
         }
         public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
@@ -25,8 +29,15 @@ namespace MAUI.VM
         #region Conructores
         public Rankings()
         {
-            var datos = ListadosBL.obtenerListadoPuntuacionesBL().Result;
-            litadoPuntuaciones = datos.OrderByDescending(p => p.Puntos).ToList();
+            CargarDatosAsync();
+        }
+        #endregion
+
+        #region Funciones
+        private async Task CargarDatosAsync()
+        {
+            var datos = await ListadosBL.obtenerListadoPuntuacionesBL();
+            LitadoPuntuaciones = datos.OrderByDescending(p => p.Puntos).ToList();
         }
         #endregion
 

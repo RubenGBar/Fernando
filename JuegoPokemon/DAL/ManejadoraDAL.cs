@@ -53,7 +53,7 @@ namespace DAL
         /// </summary>
         /// <param name="idPokemon"> ID del pokemon </param>
         /// <returns></returns>
-        public async Task<HttpStatusCode> insertaPersonaDAL(Puntuacion puntuacionGuardar)
+        public static async Task<HttpStatusCode> guardarPuntuacionDAL(Puntuacion puntuacionGuardar)
         {
 
             HttpClient mihttpClient = new HttpClient();

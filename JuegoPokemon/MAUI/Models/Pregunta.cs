@@ -63,7 +63,7 @@ namespace MAUI.Models
         #endregion
 
         #region Funciones
-        public static async Task prepararPartida(Pregunta preguntaRellenar, List<int> idPokemonAnteriores)
+        public static async Task prepararPartida(Pregunta preguntaRellenar, HashSet<int> idPokemonAnteriores)
         {
             List<int> idRepetidos = new List<int>();
             preguntaRellenar.pokemonAdivinar = new Pokemon();
@@ -80,7 +80,7 @@ namespace MAUI.Models
                     {
                         idAleatorio = Random.Shared.Next(1, 1026);
                         // Puede que reviente por nulos?
-                    } while (idPokemonAnteriores.Contains(idAleatorio) && (idRepetidos.Contains(idAleatorio) || idAleatorio == preguntaRellenar.pokemonAdivinar.Id));
+                    } while (idPokemonAnteriores.Contains(idAleatorio) && idRepetidos.Contains(idAleatorio));
 
                     if (i == 0)
                     {

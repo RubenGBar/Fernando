@@ -1,5 +1,8 @@
-﻿using DTO;
+﻿using BL;
+using DTO;
+using ENT;
 using MAUI.Models;
+using MAUI.Views;
 using MAUI.VM.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,7 +20,12 @@ namespace MAUI.VM
         private IDispatcher dispatcher;
         private bool mostrarJuego;
         private bool mostrarInstrucciones;
+        private bool mostrarFinal;
         private DelegateCommand miCommand;
+        private DelegateCommand guardarPartida;
+        private DelegateCommand irRanking;
+        private bool puedeGuardarPartida;
+        private bool puedeIrRanking;
         private bool cargando;
         #endregion
 
@@ -27,10 +35,42 @@ namespace MAUI.VM
             get { return preguntas; }
         }
 
+        public bool MostrarFinal
+        {
+            get => mostrarFinal;
+            private set
+            {
+                mostrarFinal = value;
+                OnPropertyChanged(nameof(MostrarFinal));
+            }
+        }
+
+        public bool PuedeGuardarPartida
+        {
+            get => puedeGuardarPartida;
+            private set
+            {
+                puedeGuardarPartida = value;
+                OnPropertyChanged(nameof(PuedeGuardarPartida));
+                guardarPartida.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool PuedeIrRanking
+        {
+            get => puedeIrRanking;
+            private set
+            {
+                puedeIrRanking = value;
+                OnPropertyChanged(nameof(PuedeIrRanking));
+                irRanking.RaiseCanExecuteChanged();
+            }
+        }
+
         public bool Cargando
         {
             get { return cargando; }
-            set 
+            private set 
             { 
                 cargando = value; 
                 OnPropertyChanged(nameof(Cargando)); 
@@ -43,7 +83,7 @@ namespace MAUI.VM
             {
                 return preguntaActual; 
             }
-            set 
+            private set
             { 
                 preguntaActual = value; 
                 OnPropertyChanged(nameof(PreguntaActual));
@@ -61,10 +101,20 @@ namespace MAUI.VM
             get { return miCommand; }
         }
 
+        public DelegateCommand GuardarPartida
+        {
+            get { return guardarPartida; }
+        }
+
+        public DelegateCommand IrRanking
+        {
+            get { return irRanking; }
+        }
+
         public bool MostrarJuego
         {
             get { return mostrarJuego; }
-            set 
+            private set
             { 
                 mostrarJuego = value; 
                 OnPropertyChanged(nameof(MostrarJuego)); 
@@ -74,7 +124,7 @@ namespace MAUI.VM
         public bool MostrarInstrucciones
         {
             get { return mostrarInstrucciones; }
-            set 
+            private set 
             { 
                 mostrarInstrucciones = value; 
                 OnPropertyChanged(nameof(MostrarInstrucciones)); 
@@ -90,7 +140,7 @@ namespace MAUI.VM
         public int Ronda
         {
             get { return ronda; }
-            set 
+            private set 
             { 
                 ronda = value;
                 OnPropertyChanged(nameof(Ronda));
@@ -100,7 +150,7 @@ namespace MAUI.VM
         public int Puntos
         {
             get { return puntos; } 
-            set 
+            private set 
             { 
                 puntos = value; 
                 OnPropertyChanged(nameof(Puntos)); 
@@ -119,6 +169,36 @@ namespace MAUI.VM
             mostrarInstrucciones = true;
 
             miCommand = new DelegateCommand(() => EmpezarPartida());
+            guardarPartida = new DelegateCommand(()=>guardarPartida_Execute(), guardarPartida_CanExecute);
+            irRanking = new DelegateCommand(() => irRanking_Execute(), irRanking_CanExecute);
+
+            PuedeGuardarPartida = true;
+            PuedeIrRanking = false;
+
+        }
+
+        private bool irRanking_CanExecute()
+        {
+            return PuedeIrRanking;
+        }
+
+        private async Task irRanking_Execute()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new Ranking());
+        }
+
+        private bool guardarPartida_CanExecute()
+        {
+            return PuedeGuardarPartida;
+        }
+
+        private async Task guardarPartida_Execute()
+        {
+            Puntuacion puntuacionGuardar = new Puntuacion(nickJugador, puntos);
+            await ManejadoraBL.guardarPuntuacionBL(puntuacionGuardar);
+
+            PuedeGuardarPartida = false; 
+            PuedeIrRanking = true;
 
         }
         #endregion
@@ -129,7 +209,7 @@ namespace MAUI.VM
             Cargando = true;
 
             int indicePregunta = 0;
-            List<int> idPokemonAnteriores = new List<int>();
+            HashSet<int> idPokemonAnteriores = new HashSet<int>();
             int idRepetido = 0;
             Pregunta nuevaPregunta;
             bool seguir = true;
@@ -217,9 +297,11 @@ namespace MAUI.VM
                         preguntaActual.Tiempo = 5;
                         preguntaRespondida = false;
 
-                        if (Ronda >= 20)
+                        if (Ronda > 20)
                         {
                             Ronda = 20;
+                            MostrarJuego = false;
+                            MostrarFinal = true;
                         }
 
                     }
