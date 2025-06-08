@@ -1,153 +1,200 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:MAUI.VM" 
-             x:Class="MAUI.Views.Juego">
+             xmlns:vm="clr-namespace:MAUI.VM"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False"
+             x:Class="MAUI.Views.Juego"
+             BackgroundColor="White">
 
     <ContentPage.BindingContext>
         <vm:Partida />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="Auto,*"
-          Padding="10">
+    <Grid>
+        <Image Source="fondo.png"
+               Aspect="AspectFill"
+               Opacity="0.3"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"
+               ZIndex="0" />
 
-        <Grid Grid.Row="0"
+        <Grid RowDefinitions="Auto,*" Padding="10" ZIndex="1" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent">
+
+            <Grid Grid.Row="0"
               IsVisible="{Binding MostrarInstrucciones}"
               Padding="20"
-              BackgroundColor="Beige"
               VerticalOptions="Center"
+              BackgroundColor="Transparent"
               HorizontalOptions="Center">
-            <StackLayout HorizontalOptions="Center"
-                         VerticalOptions="Center"
-                         Spacing="20">
-                <Label Text="Ojo Cuidado"
-                       FontSize="Large"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center" />
-                <Label Text="Tednrás 5 segundos para responder cada pregunta, así que estate atento, obtendrás más puntos cuanto más rápido respondas a las preguntas. Mucha Suerte :)"
-                       FontAttributes="Bold"
-                       FontSize="18"
+
+                <StackLayout HorizontalOptions="Center"
+                         VerticalOptions="Center">
+                    <StackLayout BackgroundColor="Beige"
+                             Padding="20"
+                             Spacing="20"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill">
+                        <Label Text="    OJO Cuidado"
+                           FontSize="Large"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           LineBreakMode="WordWrap" 
+                           FontFamily="PokemonFont" />
+                        <Label Text="Tendrás 5 segundos para responder cada pregunta. Obtendrás más puntos cuanto más rápido respondas. ¡Mucha Suerte!"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           FontFamily="PokemonFont"
+                           LineBreakMode="WordWrap" 
+                           HorizontalTextAlignment="Center" />
+                        <Button Text="Empezar"
+                            FontSize="24"
+                            Command="{Binding MiCommand}"
+                            BackgroundColor="#ff3000"
+                            TextColor="White"
+                            CornerRadius="10"
+                            Padding="10,5"
+                            FontFamily="PokemonFont"
+                            HorizontalOptions="Center"/>
+                    </StackLayout>
+                    <ActivityIndicator IsRunning="{Binding Cargando}"
+                                   IsVisible="{Binding Cargando}"
+                                   Color="Black"
+                                   HeightRequest="40"
+                                   HorizontalOptions="Center"/>
+                    <Label Text="Cargando..."
+                       IsVisible="{Binding Cargando}"
+                       FontSize="Small"
+                       TextColor="Gray"
                        HorizontalOptions="Center"/>
-                <Button Text="Empezar"
-                        FontSize="30"
-                        Command="{Binding MiCommand}"
-                        HorizontalOptions="Center"/>
-                <ActivityIndicator IsRunning="{Binding Cargando}"
-                   IsVisible="{Binding Cargando}"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Color="Black"
-                   HeightRequest="40"/>
-                <Label Text="Cargando..."
-                        IsVisible="{Binding Cargando}"
-                        FontSize="Small"
-                        TextColor="Gray"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
-            </StackLayout>
-        </Grid>
-
-        <Grid Grid.Row="1"
-              IsVisible="{Binding MostrarJuego}"
-              RowDefinitions="Auto,*,Auto"
-              Padding="10">
-
-            <Grid ColumnDefinitions="*,*,*"
-                  RowSpacing="0"
-                  ColumnSpacing="0"
-                  Row="0"
-                  BackgroundColor="Black"
-                  Padding="10">
-                <StackLayout HorizontalOptions="Center">
-                    <Label Text="Tiempo"
-                           TextColor="White"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center" />
-                    <Label Text="{Binding PreguntaActual.Tiempo}"
-                           TextColor="White"
-                           HorizontalOptions="Center" />
-                </StackLayout>
-
-                <StackLayout Grid.Column="1" HorizontalOptions="Center">
-                    <Label Text="Ronda"
-                           TextColor="White"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center" />
-                    <Label Text="{Binding Ronda}"
-                           TextColor="White"
-                           HorizontalOptions="Center" />
-                </StackLayout>
-
-                <StackLayout Grid.Column="2" HorizontalOptions="Center">
-                    <Label Text="Puntos"
-                           TextColor="White"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center" />
-                    <Label Text="{Binding Puntos}"
-                           TextColor="White"
-                           HorizontalOptions="Center" />
                 </StackLayout>
             </Grid>
 
-            <StackLayout Grid.Row="1"
-                         VerticalOptions="Center"
-                         Spacing="20">
+            <Grid Grid.Row="1"
+              IsVisible="{Binding MostrarJuego}"
+              RowDefinitions="Auto,Auto,*"
+              Padding="10"
+              BackgroundColor="Transparent">
 
-                <Label Text="{Binding PreguntaActual.PokemonAdivinar.Especie.Nombre}"
-                       FontAttributes="Bold"
-                       FontSize="24"
-                       TextTransform="Uppercase"
-                       HorizontalOptions="Center" />
+                <Grid ColumnDefinitions="*,*,*"
+                  Padding="15"
+                  BackgroundColor="Transparent"
+                  Row="0">
+                    <StackLayout HorizontalOptions="Center">
+                        <Label Text="Tiempo"
+                           TextColor="DarkBlue"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           HorizontalOptions="Center"/>
+                        <Label Text="{Binding PreguntaActual.Tiempo}"
+                           TextColor="DarkBlue"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    </StackLayout>
 
-                <CollectionView ItemsSource="{Binding PreguntaActual.PokemonClickables}"
-                                SelectionMode="Single"
-                                SelectedItem="{Binding PreguntaActual.PokemonSeleccionado}"
-                                x:Name="cvPokemons">
+                    <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                        <Label Text="Ronda"
+                           TextColor="DarkBlue"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           HorizontalOptions="Center"/>
+                        <Label Text="{Binding Ronda}"
+                           TextColor="DarkBlue"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    </StackLayout>
+
+                    <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                        <Label Text="Puntos"
+                           TextColor="DarkBlue"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           HorizontalOptions="Center"/>
+                        <Label Text="{Binding Puntos}"
+                           TextColor="DarkBlue"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Grid>
+
+                <Label Grid.Row="1"
+                   Text="{Binding PreguntaActual.PokemonAdivinar.Especie.Nombre}"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontFamily="PokemonFont"
+                   TextColor="DarkBlue"
+                   TextTransform="Uppercase"
+                   Margin="0,20,0,10"/>
+
+                <CollectionView Grid.Row="2"
+                            ItemsSource="{Binding PreguntaActual.PokemonClickables}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding PreguntaActual.PokemonSeleccionado}"
+                            x:Name="cvPokemons"
+                            BackgroundColor="Transparent"
+                            Margin="20,10,20,20">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical"
-                                         Span="2"
-                                         VerticalItemSpacing="10"
-                                         HorizontalItemSpacing="10"/>
+                                     Span="2"
+                                     VerticalItemSpacing="20"
+                                     HorizontalItemSpacing="20"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Image Source="{Binding Foto}"
                                    HeightRequest="100"
                                    WidthRequest="100"
-                                   Aspect="AspectFit"
-                                   BackgroundColor="LightGray"/>
+                                   HorizontalOptions="Center"
+                                   Aspect="AspectFit"/>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+                    <CollectionView.Resources>
+                        <Style TargetType="VisualElement">
+                            <Setter Property="VisualStateManager.VisualStateGroups">
+                                <VisualStateGroupList>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal"/>
+                                        <VisualState Name="PointerOver"/>
+                                        <VisualState Name="Selected"/>
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </Setter>
+                        </Style>
+                    </CollectionView.Resources>
                 </CollectionView>
+            </Grid>
 
+            <StackLayout Grid.Row="1"
+                     IsVisible="{Binding MostrarFinal}"
+                     Padding="30"
+                     BackgroundColor="LightYellow"
+                     Spacing="15"
+                     VerticalOptions="Center">
+                <Label Text="¡Juego Terminado!"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
+                <Entry Placeholder="Introduce tu nick"
+                   Text="{Binding NickJugador}"
+                   FontSize="16"
+                   HorizontalOptions="Fill"/>
+                <Button Text="Guardar Puntuación"
+                    Command="{Binding GuardarPartida}"
+                    BackgroundColor="#00aa00"
+                    TextColor="White"
+                    FontAttributes="Bold"/>
+                <Button Text="Ir al Ranking"
+                    Command="{Binding IrRanking}"
+                    BackgroundColor="#ff3000"
+                    TextColor="White"
+                    FontAttributes="Bold"/>
             </StackLayout>
 
         </Grid>
-
-        <StackLayout Grid.Row="1"
-             IsVisible="{Binding MostrarFinal}"
-             Padding="20"
-             BackgroundColor="LightYellow"
-             Spacing="15"
-             VerticalOptions="Center">
-
-            <Label Text="¡Juego Terminado!"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center" />
-
-            <Entry Placeholder="Introduce tu nick"
-                   Text="{Binding NickJugador}"
-                   HorizontalOptions="Fill" />
-
-            <Button Text="Guardar Puntuación"
-                    Command="{Binding GuardarPartida}" />
-
-            <Button Text="Ir al Ranking"
-                    Command="{Binding IrRanking}" />
-
-        </StackLayout>
-
     </Grid>
-
 </ContentPage>

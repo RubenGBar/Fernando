@@ -1,32 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MAUI.Views.MainPage">
+             x:Class="MAUI.Views.MainPage"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False"
+             BackgroundColor="Transparent">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="25" VerticalOptions="Center">
+    <Grid>
+        <Image Source="fondo.jpg"
+               Aspect="AspectFill"
+               Opacity="0.3"
+               VerticalOptions="Fill"
+               HorizontalOptions="Fill"/>
 
-            <Label Text="Bienvenido a PokeQuiz"
-                   FontSize="Medium"
-                   HorizontalOptions="Center" />
+        <Grid RowDefinitions="Auto,*,Auto"
+              Padding="20">
 
-            <Image Source="https://images.wikidexcdn.net/mwuploads/wikidex/3/33/latest/20180318190751/Logo_WikiDex.png"
-                   HeightRequest="100"
-                   WidthRequest="100"
+            <Label Text="Bienvenido A PokeQuiz"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="DarkBlue"
+                   FontFamily="PokemonFont"
+                   Grid.Row="0" />
+
+            <Image Source="logobien.png"
                    Aspect="AspectFit"
-                   BackgroundColor="LightGray"/>
+                   HeightRequest="200"
+                   WidthRequest="200"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Row="1" />
 
-            <Button Text="Juego"
-                    Clicked="OnJuegoClicked"
-                    FontSize="Medium"
-                    HorizontalOptions="Center" />
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="*,*"
+                  Margin="0,30,0,0">
 
-            <Button Text="Ranking"
-                    Clicked="OnRankingClicked"
-                    FontSize="Medium"
-                    HorizontalOptions="Center" />
+                <Button Text="Jugar"
+                        Clicked="OnJuegoClicked"
+                        FontSize="Medium"
+                        Margin="10"
+                        Grid.Column="0"
+                        BackgroundColor="#ff3000"
+                        TextColor="White"
+                        FontFamily="PokemonFont"
+                        CornerRadius="10"
+                        MinimumWidthRequest="100"
+                        MinimumHeightRequest="50"
+                        />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <Button Text="Ranking"
+                        Clicked="OnRankingClicked"
+                        FontSize="Medium"
+                        Margin="10"
+                        Grid.Column="1"
+                        BackgroundColor="#ff3000"
+                        TextColor="White"
+                        FontFamily="PokemonFont"
+                        CornerRadius="10"
+                        MinimumWidthRequest="100"
+                        MinimumHeightRequest="50"
+                        />
+
+            </Grid>
+        </Grid>
+    </Grid>
 
 </ContentPage>

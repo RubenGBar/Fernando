@@ -1,43 +1,91 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
-             xmlns:vm="clr-namespace:MAUI.VM"  
-             x:Class="MAUI.Views.Ranking">  
+             xmlns:vm="clr-namespace:MAUI.VM"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="False"
+             x:Class="MAUI.Views.Ranking">
 
-    <ContentPage.BindingContext>  
-        <vm:Rankings />  
-    </ContentPage.BindingContext>  
+    <ContentPage.BindingContext>
+        <vm:Rankings />
+    </ContentPage.BindingContext>
 
-    <ContentPage.Content>  
-        <StackLayout Padding="20">  
-            <Label Text="Ranking de Jugadores"  
-                   FontSize="24"  
-                   FontAttributes="Bold"  
-                   HorizontalOptions="Center"   
-                   Margin="0,0,0,10"/>  
+    <Grid>
+        <Image Source="fondo.jpg"
+               Aspect="AspectFill"
+               Opacity="0.3"
+               VerticalOptions="Fill"
+               HorizontalOptions="Fill" />
 
-            <CollectionView ItemsSource="{Binding LitadoPuntuaciones}">  
-                <CollectionView.ItemTemplate>  
-                    <DataTemplate>  
-                        <Grid Padding="10">  
-                            <Grid.ColumnDefinitions>  
-                                <ColumnDefinition Width="3*" />  
-                                <ColumnDefinition Width="1*" />  
-                            </Grid.ColumnDefinitions>  
+        <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto">
 
-                            <Label Text="{Binding Nickname}"   
-                                   FontSize="18"  
-                                   VerticalOptions="Center" />  
+            <Label Text="Ranking de Jugadores"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   FontFamily="PokemonFont"
+                   TextColor="DarkBlue"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Grid.Row="0" />
 
-                            <Label Text="{Binding Puntos}"   
-                                   FontSize="18"  
-                                   HorizontalTextAlignment="End"  
-                                   Grid.Column="1"  
-                                   VerticalOptions="Center" />  
-                        </Grid>  
-                    </DataTemplate>  
-                </CollectionView.ItemTemplate>  
-            </CollectionView>  
-        </StackLayout>  
-    </ContentPage.Content>  
+            <!-- No funciona
+            <StackLayout Grid.Row="1"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         IsVisible="{Binding CargandoEsVisible}"
+                         Spacing="5">
+
+                <ActivityIndicator IsRunning="{Binding CargandoEsVisible}"
+                                   Color="Black"
+                                   WidthRequest="40"
+                                   HeightRequest="40" />
+
+                <Label Text="Cargando..."
+                       TextColor="DarkBlue"
+                       FontSize="16"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+            -->
+
+            <CollectionView ItemsSource="{Binding LitadoPuntuaciones}"
+                            Grid.Row="2"
+                            Margin="0,20,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="15"
+                              Margin="0,5"
+                              ColumnDefinitions="3*,1*">
+
+                            <Label Text="{Binding Nickname}"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   TextColor="DarkBlue" />
+
+                            <Label Text="{Binding Puntos}"
+                                   FontSize="20"
+                                   HorizontalTextAlignment="End"
+                                   VerticalOptions="Center"
+                                   TextColor="DarkBlue"
+                                   Grid.Column="1" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Volver"
+                    Clicked="OnVolverClicked"
+                    Grid.Row="3"
+                    HorizontalOptions="Center"
+                    Margin="0,20,0,0"
+                    FontSize="Medium"
+                    BackgroundColor="#ff3000"
+                    TextColor="White"
+                    FontFamily="PokemonFont"
+                    CornerRadius="10"
+                    Padding="20,10"
+                    MinimumWidthRequest="120"
+                    MinimumHeightRequest="50" />
+        </Grid>
+    </Grid>
 </ContentPage>
