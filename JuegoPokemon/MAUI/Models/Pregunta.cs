@@ -63,6 +63,13 @@ namespace MAUI.Models
         #endregion
 
         #region Funciones
+        /// <summary>
+        /// Funcion que rellena la pregunta recibida. La primera vez que se llama, no se comparan los IDs con la lista de IDs repetidos, 
+        /// ya que todavía no hay ninguno
+        /// </summary>
+        /// <param name="preguntaRellenar"> Pregunta a rellenar </param>
+        /// <param name="idPokemonAnteriores"> Lista de IDs repetidos </param>
+        /// <returns></returns>
         public static async Task prepararPartida(Pregunta preguntaRellenar, HashSet<int> idPokemonAnteriores)
         {
             List<int> idRepetidos = new List<int>();
@@ -123,10 +130,14 @@ namespace MAUI.Models
 
             shuffle(preguntaRellenar.pokemonClickables);
 
-            preguntaRellenar.tiempo = 5;
+            preguntaRellenar.tiempo = 6;
 
         }
 
+        /// <summary>
+        /// Función para mezclar una lista de forma aleatoria porque en c# no existe el método shuffle de Java
+        /// </summary>
+        /// <param name="listaMezclar"> lista a mezclar </param>
         private static void shuffle(ObservableCollection<Pokemon> listaMezclar)
         {
             Random rnd = new Random();

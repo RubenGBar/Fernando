@@ -28,25 +28,6 @@
                    VerticalOptions="Center"
                    Grid.Row="0" />
 
-            <!-- No funciona
-            <StackLayout Grid.Row="1"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Center"
-                         IsVisible="{Binding CargandoEsVisible}"
-                         Spacing="5">
-
-                <ActivityIndicator IsRunning="{Binding CargandoEsVisible}"
-                                   Color="Black"
-                                   WidthRequest="40"
-                                   HeightRequest="40" />
-
-                <Label Text="Cargando..."
-                       TextColor="DarkBlue"
-                       FontSize="16"
-                       HorizontalOptions="Center" />
-            </StackLayout>
-            -->
-
             <CollectionView ItemsSource="{Binding LitadoPuntuaciones}"
                             Grid.Row="2"
                             Margin="0,20,0,0">

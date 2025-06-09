@@ -17,7 +17,6 @@ namespace MAUI.VM
         private string nickJugador;
         private int ronda;
         private int puntos;
-        private IDispatcher dispatcher;
         private bool mostrarJuego;
         private bool mostrarInstrucciones;
         private bool mostrarFinal;
@@ -26,7 +25,7 @@ namespace MAUI.VM
         private DelegateCommand irRanking;
         private bool puedeGuardarPartida;
         private bool puedeIrRanking;
-        private bool cargando;
+        private bool cargando;  
         private IDispatcherTimer cuentaHaciaAtras;
         // Estas variables las tengo que declarar fuera de la función del juego principal para que no se reinicien en cada tick
         private int indicePregunta;
@@ -92,12 +91,6 @@ namespace MAUI.VM
                 preguntaActual = value; 
                 OnPropertyChanged(nameof(PreguntaActual));
             }
-        }
-
-        public IDispatcher Dispatcher
-        {
-            get { return dispatcher; }
-            set { dispatcher = value; }
         }
 
         public DelegateCommand MiCommand
@@ -218,6 +211,10 @@ namespace MAUI.VM
         #endregion
 
         #region Funciones
+        /// <summary>
+        /// Función en la que preparo las preguntas y lo pongo todo bien antes de que empiece la partida.
+        /// </summary>
+        /// <returns></returns>
         private async Task EmpezarPartida()
         {
             Cargando = true;
@@ -263,7 +260,7 @@ namespace MAUI.VM
             if (preguntas.Any())
             {
                 preguntaActual = preguntas[indicePregunta];
-                preguntaActual.Tiempo = 5;
+                preguntaActual.Tiempo = 6;
 
                 OnPropertyChanged(nameof(PreguntaActual));
 
@@ -276,6 +273,11 @@ namespace MAUI.VM
 
         }
 
+        /// <summary>
+        /// Función principal del juego, que será la que el timer repetirá en cada tick.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void juegoPrincipal(object? sender, EventArgs e)
         {
 
@@ -329,7 +331,7 @@ namespace MAUI.VM
                         OnPropertyChanged(nameof(PreguntaActual));
                     }
 
-                    preguntaActual.Tiempo = 5;
+                    preguntaActual.Tiempo = 6;
                     preguntaRespondida = false;
 
                     if (Ronda > 20)

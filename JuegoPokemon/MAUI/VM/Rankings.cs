@@ -8,19 +8,9 @@ namespace MAUI.VM
     {
         #region Atributos
         private List<Puntuacion> litadoPuntuaciones;
-        //private bool cargandoEsVisible;
         #endregion
 
         #region Propiedades
-        /*public bool CargandoEsVisible 
-        {
-            get { return cargandoEsVisible; }
-            private set 
-            { 
-                cargandoEsVisible = value; 
-                OnPropertyChanged(nameof(CargandoEsVisible));
-            }
-        }*/
         public List<Puntuacion> LitadoPuntuaciones 
         {
             get { return litadoPuntuaciones; }
@@ -41,12 +31,14 @@ namespace MAUI.VM
         #endregion
 
         #region Funciones
+        /// <summary>
+        /// Función asíncrona que carga los datos de las puntuaciones
+        /// </summary>
+        /// <returns></returns>
         private async Task CargarDatosAsync()
         {
-            //CargandoEsVisible = true;
             var datos = await ListadosBL.obtenerListadoPuntuacionesBL();
             LitadoPuntuaciones = datos.OrderByDescending(p => p.Puntos).ToList();
-            //CargandoEsVisible = false;
         }
         #endregion
 
