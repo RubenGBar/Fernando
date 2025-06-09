@@ -27,6 +27,10 @@ namespace MAUI.VM
         private bool puedeGuardarPartida;
         private bool puedeIrRanking;
         private bool cargando;
+        private IDispatcherTimer cuentaHaciaAtras;
+        // Estas variables las tengo que declarar fuera de la función del juego principal para que no se reinicien en cada tick
+        private int indicePregunta;
+        private bool preguntaRespondida;
         #endregion
 
         #region Propiedades
@@ -172,11 +176,21 @@ namespace MAUI.VM
             guardarPartida = new DelegateCommand(()=>guardarPartida_Execute(), guardarPartida_CanExecute);
             irRanking = new DelegateCommand(() => irRanking_Execute(), irRanking_CanExecute);
 
+            indicePregunta = 0;
+            preguntaRespondida = false;
+            puntos = 0;
+
+            cuentaHaciaAtras = Application.Current.Dispatcher.CreateTimer();
+            cuentaHaciaAtras.Interval = TimeSpan.FromSeconds(1.5);
+            cuentaHaciaAtras.Tick += juegoPrincipal;
+
             PuedeGuardarPartida = true;
             PuedeIrRanking = false;
 
         }
+        #endregion
 
+        #region Commands
         private bool irRanking_CanExecute()
         {
             return PuedeIrRanking;
@@ -212,9 +226,6 @@ namespace MAUI.VM
             HashSet<int> idPokemonAnteriores = new HashSet<int>();
             int idRepetido = 0;
             Pregunta nuevaPregunta;
-            bool seguir = true;
-            bool preguntaRespondida = false;
-            puntos = 0;
 
             // Esto lo dejo en esta función que será la que se llame al pulsar el botón
             for (int i = 0; i < 20; i++)
@@ -238,10 +249,8 @@ namespace MAUI.VM
             }
 
             Cargando = false;
-            //OnPropertyChanged(nameof(Cargando));
 
-            // Puede que esto no haga falta
-            OnPropertyChanged(nameof(ronda));
+            
             MostrarJuego = true;
 
             MostrarInstrucciones = !mostrarInstrucciones;
@@ -263,79 +272,82 @@ namespace MAUI.VM
 
             }
 
-            // Esto lo muevo a la función del OnTick
-            Dispatcher.StartTimer(TimeSpan.FromSeconds(1.5), () =>
+            cuentaHaciaAtras.Start();
+
+        }
+
+        private async void juegoPrincipal(object? sender, EventArgs e)
+        {
+
+            if (indicePregunta >= preguntas.Count())
             {
-                if (indicePregunta >= preguntas.Count())
-                {
-                    seguir = false;
-                }
-                else
-                {
+                cuentaHaciaAtras.Stop();
+            }
+            else
+            {
 
-                    if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida) 
+                if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida)
+                {
+                    // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
+                    foreach (Pokemon pokemon in preguntaActual.PokemonClickables)
                     {
-
-                        foreach (Pokemon pokemon in preguntaActual.PokemonClickables)
-                        {
-                            pokemon.EsCorrecto = null;
-                        }
-
-                        if (preguntaActual.PokemonSeleccionado == preguntaActual.PokemonAdivinar)
-                        {
-                            puntos += preguntaActual.Tiempo;
-                            OnPropertyChanged(nameof(Puntos));
-                            preguntaRespondida = true;
-                            preguntaActual.PokemonSeleccionado.EsCorrecto = true;
-                            //await Task.Delay(1000);
-                        }
-                        else if (preguntaActual.PokemonSeleccionado != preguntaActual.PokemonAdivinar)
-                        {
-                            preguntaRespondida = true;
-                            preguntaActual.PokemonSeleccionado.EsCorrecto = false;
-                            //await Task.Delay(1000);
-                        }
-
+                        pokemon.EsCorrecto = null;
                     }
 
-                    if (preguntaActual.Tiempo == 0 || preguntaRespondida)
+                    if (preguntaActual.PokemonSeleccionado == preguntaActual.PokemonAdivinar)
                     {
-                        indicePregunta++;
-                        Ronda++;
-                        OnPropertyChanged(nameof(ronda));
+                        puntos += preguntaActual.Tiempo;
+                        OnPropertyChanged(nameof(Puntos));
+                        preguntaRespondida = true;
+                        preguntaActual.PokemonSeleccionado.EsCorrecto = true;
+                        // He tenido que poner esto para que en la vista de tiempo de verse el frame de color rojo o verde
+                        await Task.Delay(1000);
+                    }
+                    else if (preguntaActual.PokemonSeleccionado != preguntaActual.PokemonAdivinar)
+                    {
+                        preguntaRespondida = true;
+                        preguntaActual.PokemonSeleccionado.EsCorrecto = false;
+                        // He tenido que poner esto para que en la vista de tiempo de verse el frame de color rojo o verde
+                        await Task.Delay(1000);
+                    }
 
-                        if (indicePregunta >= preguntas.Count())
-                        {
-                            seguir = false;
-                        }
-                        else
-                        {
-                            preguntaActual = preguntas[indicePregunta];
-                            OnPropertyChanged(nameof(PreguntaActual));
-                        }
+                }
 
-                        preguntaActual.Tiempo = 5;
-                        preguntaRespondida = false;
+                if (preguntaActual.Tiempo == 0 || preguntaRespondida)
+                {
+                    indicePregunta++;
+                    Ronda++;
+                    OnPropertyChanged(nameof(Ronda));
 
-                        if (Ronda > 20)
-                        {
-                            Ronda = 20;
-                            MostrarJuego = false;
-                            MostrarFinal = true;
-                        }
-
+                    if (indicePregunta >= preguntas.Count())
+                    {
+                        cuentaHaciaAtras.Stop();
                     }
                     else
                     {
-                        preguntaActual.Tiempo--;
+                        preguntaActual = preguntas[indicePregunta];
+                        OnPropertyChanged(nameof(PreguntaActual));
+                    }
+
+                    preguntaActual.Tiempo = 5;
+                    preguntaRespondida = false;
+
+                    if (Ronda > 20)
+                    {
+                        Ronda = 20;
+                        MostrarJuego = false;
+                        MostrarFinal = true;
                     }
 
                 }
+                else
+                {
+                    preguntaActual.Tiempo--;
+                }
 
-                return seguir;
-            });
-
+            }
         }
+
         #endregion
 
         #region Notify

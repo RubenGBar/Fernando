@@ -5,6 +5,7 @@ namespace DTO
 {
     public class Pokemon : INotifyPropertyChanged
     {
+        // He tenido que añadir esto aquí para poder cambiar el color del frame en cada pokemon individualmente
         #region Atributos
         private bool? esCorrecto;
         #endregion
