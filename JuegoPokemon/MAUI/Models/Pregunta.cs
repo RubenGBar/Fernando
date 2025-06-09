@@ -79,12 +79,10 @@ namespace MAUI.Models
                     do
                     {
                         idAleatorio = Random.Shared.Next(1, 1026);
-                        // Puede que reviente por nulos?
                     } while (idPokemonAnteriores.Contains(idAleatorio) && idRepetidos.Contains(idAleatorio));
 
                     if (i == 0)
                     {
-                        // Tengo que llamar a un método asíncrono desde el constructor y no sé como hacerlo
                         preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
                         preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
                     }
@@ -105,12 +103,10 @@ namespace MAUI.Models
                     do
                     {
                         idAleatorio = Random.Shared.Next(1, 1026);
-                        // Puede que reviente por nulos?
                     } while (idRepetidos.Contains(idAleatorio) || idAleatorio == preguntaRellenar.pokemonAdivinar.Id);
 
                     if (i == 0)
                     {
-                        // Tengo que llamar a un método asíncrono desde el constructor y no sé como hacerlo
                         preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
                         preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
                     }

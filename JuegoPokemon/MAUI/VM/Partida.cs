@@ -27,12 +27,18 @@ namespace MAUI.VM
         private bool puedeGuardarPartida;
         private bool puedeIrRanking;
         private bool cargando;
+        private bool correctoConverter;
         #endregion
 
         #region Propiedades
         public ObservableCollection<Pregunta> Preguntas
         {
             get { return preguntas; }
+        }
+
+        public bool CorrectoConverter
+        {
+            get { return correctoConverter; }
         }
 
         public bool MostrarFinal
@@ -216,6 +222,7 @@ namespace MAUI.VM
             bool preguntaRespondida = false;
             puntos = 0;
 
+            // Esto lo dejo en esta función que será la que se llame al pulsar el botón
             for (int i = 0; i < 20; i++)
             {
                 if (preguntaActual != null) 
@@ -262,6 +269,7 @@ namespace MAUI.VM
 
             }
 
+            // Esto lo muevo a la función del OnTick
             Dispatcher.StartTimer(TimeSpan.FromSeconds(1.5), () =>
             {
                 if (indicePregunta >= preguntas.Count())
@@ -276,6 +284,14 @@ namespace MAUI.VM
                         puntos += preguntaActual.Tiempo;
                         OnPropertyChanged(nameof(Puntos));
                         preguntaRespondida = true;
+                        correctoConverter = true;
+                        OnPropertyChanged(nameof(CorrectoConverter));
+                    }
+                    else if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida && preguntaActual.PokemonSeleccionado != preguntaActual.PokemonAdivinar)
+                    {
+                        preguntaRespondida = true;
+                        correctoConverter = false;
+                        OnPropertyChanged(nameof(CorrectoConverter));
                     }
 
                     if (preguntaActual.Tiempo == 0 || preguntaRespondida)

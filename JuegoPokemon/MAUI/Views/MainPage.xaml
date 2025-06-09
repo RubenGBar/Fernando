@@ -8,7 +8,7 @@
 
     <Grid>
         <Image Source="fondo.jpg"
-               Aspect="AspectFill"
+               Aspect="Center"
                Opacity="0.3"
                VerticalOptions="Fill"
                HorizontalOptions="Fill"/>

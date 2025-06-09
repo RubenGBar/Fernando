@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MAUI.VM"
+             xmlns:converters="clr-namespace:MAUI.Converters"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="False"
              x:Class="MAUI.Views.Juego"
@@ -11,15 +12,18 @@
         <vm:Partida />
     </ContentPage.BindingContext>
 
-    <Grid>
-        <Image Source="fondo.png"
-               Aspect="AspectFill"
-               Opacity="0.3"
-               HorizontalOptions="Fill"
-               VerticalOptions="Fill"
-               ZIndex="0" />
+    <ContentPage.Resources>
+        <converters:ConverterPokemonSeleccionado x:Key="ConverterPokemonSeleccionado" />
+    </ContentPage.Resources>
 
-        <Grid RowDefinitions="Auto,*" Padding="10" ZIndex="1" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent">
+    <Grid>
+        <Image Source="fondo.jpg"
+               Aspect="Center"
+               Opacity="0.1"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill" />
+
+            <Grid RowDefinitions="Auto,*" Padding="10" ZIndex="1" VerticalOptions="Fill" HorizontalOptions="Fill" BackgroundColor="Transparent">
 
             <Grid Grid.Row="0"
               IsVisible="{Binding MostrarInstrucciones}"
@@ -29,7 +33,8 @@
               HorizontalOptions="Center">
 
                 <StackLayout HorizontalOptions="Center"
-                         VerticalOptions="Center">
+                             BackgroundColor="Transparent"
+                             VerticalOptions="Center">
                     <StackLayout BackgroundColor="Beige"
                              Padding="20"
                              Spacing="20"
@@ -80,7 +85,8 @@
                   Padding="15"
                   BackgroundColor="Transparent"
                   Row="0">
-                    <StackLayout HorizontalOptions="Center">
+                    <StackLayout HorizontalOptions="Center"
+                                 BackgroundColor="Transparent">
                         <Label Text="Tiempo"
                            TextColor="DarkBlue"
                            FontAttributes="Bold"
@@ -93,7 +99,7 @@
                            HorizontalOptions="Center"/>
                     </StackLayout>
 
-                    <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <StackLayout Grid.Column="1" HorizontalOptions="Center" BackgroundColor="Transparent">
                         <Label Text="Ronda"
                            TextColor="DarkBlue"
                            FontAttributes="Bold"
@@ -106,7 +112,7 @@
                            HorizontalOptions="Center"/>
                     </StackLayout>
 
-                    <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <StackLayout Grid.Column="2" HorizontalOptions="Center" BackgroundColor="Transparent">
                         <Label Text="Puntos"
                            TextColor="DarkBlue"
                            FontAttributes="Bold"
@@ -122,7 +128,7 @@
 
                 <Label Grid.Row="1"
                    Text="{Binding PreguntaActual.PokemonAdivinar.Especie.Nombre}"
-                   FontSize="36"
+                   FontSize="28"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
@@ -146,11 +152,13 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Foto}"
+                            <Frame BackgroundColor="{Binding CorrectoConverter, Converter={StaticResource ConverterPokemonSeleccionado} }">
+                                <Image Source="{Binding Foto}"
                                    HeightRequest="100"
                                    WidthRequest="100"
                                    HorizontalOptions="Center"
-                                   Aspect="AspectFit"/>
+                                   Aspect="AspectFit" />
+                            </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.Resources>
