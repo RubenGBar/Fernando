@@ -1,9 +1,14 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace DTO
 {
-    public class Pokemon
+    public class Pokemon : INotifyPropertyChanged
     {
+        #region Atributos
+        private bool? esCorrecto;
+        #endregion
+
         #region Propiedades
         [JsonProperty("id")]
         public int Id { get; }
@@ -13,6 +18,16 @@ namespace DTO
         [JsonProperty("species")]
         public Especie Especie { get; set; }
         public string Foto { get; set; }
+        public bool? EsCorrecto
+        {
+            get { return esCorrecto; }
+            set
+            {
+                esCorrecto = value;
+                OnPropertyChanged(nameof(EsCorrecto));
+            }
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
         #region Constructores
@@ -34,6 +49,13 @@ namespace DTO
             Id = id;
             Especie = especie;
             Foto = foto;
+        }
+        #endregion
+
+        #region Funciones
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
     }

@@ -152,7 +152,7 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame BackgroundColor="{Binding CorrectoConverter, Converter={StaticResource ConverterPokemonSeleccionado} }">
+                            <Frame BackgroundColor="{Binding EsCorrecto, Converter={StaticResource ConverterPokemonSeleccionado} }">
                                 <Image Source="{Binding Foto}"
                                    HeightRequest="100"
                                    WidthRequest="100"

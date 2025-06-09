@@ -27,18 +27,12 @@ namespace MAUI.VM
         private bool puedeGuardarPartida;
         private bool puedeIrRanking;
         private bool cargando;
-        private bool correctoConverter;
         #endregion
 
         #region Propiedades
         public ObservableCollection<Pregunta> Preguntas
         {
             get { return preguntas; }
-        }
-
-        public bool CorrectoConverter
-        {
-            get { return correctoConverter; }
         }
 
         public bool MostrarFinal
@@ -279,19 +273,29 @@ namespace MAUI.VM
                 else
                 {
 
-                    if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida && preguntaActual.PokemonSeleccionado == preguntaActual.PokemonAdivinar)
+                    if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida) 
                     {
-                        puntos += preguntaActual.Tiempo;
-                        OnPropertyChanged(nameof(Puntos));
-                        preguntaRespondida = true;
-                        correctoConverter = true;
-                        OnPropertyChanged(nameof(CorrectoConverter));
-                    }
-                    else if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida && preguntaActual.PokemonSeleccionado != preguntaActual.PokemonAdivinar)
-                    {
-                        preguntaRespondida = true;
-                        correctoConverter = false;
-                        OnPropertyChanged(nameof(CorrectoConverter));
+
+                        foreach (Pokemon pokemon in preguntaActual.PokemonClickables)
+                        {
+                            pokemon.EsCorrecto = null;
+                        }
+
+                        if (preguntaActual.PokemonSeleccionado == preguntaActual.PokemonAdivinar)
+                        {
+                            puntos += preguntaActual.Tiempo;
+                            OnPropertyChanged(nameof(Puntos));
+                            preguntaRespondida = true;
+                            preguntaActual.PokemonSeleccionado.EsCorrecto = true;
+                            //await Task.Delay(1000);
+                        }
+                        else if (preguntaActual.PokemonSeleccionado != preguntaActual.PokemonAdivinar)
+                        {
+                            preguntaRespondida = true;
+                            preguntaActual.PokemonSeleccionado.EsCorrecto = false;
+                            //await Task.Delay(1000);
+                        }
+
                     }
 
                     if (preguntaActual.Tiempo == 0 || preguntaRespondida)

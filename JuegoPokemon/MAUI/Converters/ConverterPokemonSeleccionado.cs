@@ -1,6 +1,4 @@
-﻿
-
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace MAUI.Converters
 {
@@ -12,7 +10,7 @@ namespace MAUI.Converters
 
             if (value != null)
             {
-                if (value is Boolean correcto) 
+                if (value is Boolean correcto)
                 {
                     if (correcto)
                     {
@@ -23,6 +21,10 @@ namespace MAUI.Converters
                         color = Color.FromArgb("e74c3c");
                     }
                 }
+            }
+            else 
+            {
+                color = Colors.Transparent;
             }
 
             return color;
