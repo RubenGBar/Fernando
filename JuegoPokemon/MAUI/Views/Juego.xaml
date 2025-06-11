@@ -90,12 +90,14 @@
                         <Label Text="Tiempo"
                            TextColor="DarkBlue"
                            FontAttributes="Bold"
-                           FontSize="14"
+                           FontSize="24"
+                           FontFamily="PokemonFont"
                            HorizontalOptions="Center"/>
                         <Label Text="{Binding PreguntaActual.Tiempo}"
                            TextColor="DarkBlue"
-                           FontSize="18"
+                           FontSize="28"
                            FontAttributes="Bold"
+                           FontFamily="PokemonFont"
                            HorizontalOptions="Center"/>
                     </StackLayout>
 
@@ -103,11 +105,13 @@
                         <Label Text="Ronda"
                            TextColor="DarkBlue"
                            FontAttributes="Bold"
-                           FontSize="14"
+                           FontFamily="PokemonFont"
+                           FontSize="24"
                            HorizontalOptions="Center"/>
                         <Label Text="{Binding Ronda}"
                            TextColor="DarkBlue"
-                           FontSize="18"
+                           FontSize="28"
+                           FontFamily="PokemonFont"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"/>
                     </StackLayout>
@@ -115,12 +119,14 @@
                     <StackLayout Grid.Column="2" HorizontalOptions="Center" BackgroundColor="Transparent">
                         <Label Text="Puntos"
                            TextColor="DarkBlue"
+                           FontFamily="PokemonFont"
                            FontAttributes="Bold"
-                           FontSize="14"
+                           FontSize="24"
                            HorizontalOptions="Center"/>
                         <Label Text="{Binding Puntos}"
                            TextColor="DarkBlue"
-                           FontSize="18"
+                           FontSize="28"
+                           FontFamily="PokemonFont"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"/>
                     </StackLayout>
@@ -140,7 +146,7 @@
                 <CollectionView Grid.Row="2"
                             ItemsSource="{Binding PreguntaActual.PokemonClickables}"
                             SelectionMode="Single"
-                            SelectedItem="{Binding PreguntaActual.PokemonSeleccionado}"
+                            SelectedItem="{Binding PokemonSeleccionado}"
                             x:Name="cvPokemons"
                             BackgroundColor="Transparent"
                             Margin="20,10,20,20">

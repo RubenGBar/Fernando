@@ -38,6 +38,24 @@ namespace MAUI.VM
             get { return preguntas; }
         }
 
+        public Pokemon PokemonSeleccionado
+        {
+            // He tenido que poner ahí que pregunta actual puede ser null, porque si no me daba un error al entrar en la vista
+            get { return PreguntaActual?.PokemonSeleccionado; }
+            set
+            {
+                if (preguntaActual != null) 
+                {
+                    preguntaActual.PokemonSeleccionado = value;
+                    if (value != null) 
+                    {
+                        sumarPuntuacion();
+                    }
+
+                }
+            }
+        }
+
         public Pregunta PreguntaActual
         {
             get { return preguntaActual; }
@@ -249,7 +267,7 @@ namespace MAUI.VM
             if (preguntas.Any())
             {
                 preguntaActual = preguntas[indicePregunta];
-                preguntaActual.Tiempo = 6;
+                preguntaActual.Tiempo = 5;
 
                 OnPropertyChanged(nameof(PreguntaActual));
 
@@ -260,6 +278,30 @@ namespace MAUI.VM
 
             cuentaHaciaAtras.Start();
 
+        }
+
+        /// <summary>
+        /// Función para sumar la puntuación sólo cuando se ha seleccionado y así no tener que comprobar en cada tick
+        /// </summary>
+        /// <returns></returns>
+        public async Task sumarPuntuacion() 
+        {
+            if (preguntaActual.PokemonSeleccionado == preguntaActual.PokemonAdivinar)
+            {
+                puntos += preguntaActual.Tiempo;
+                OnPropertyChanged(nameof(Puntos));
+                preguntaRespondida = true;
+                preguntaActual.PokemonSeleccionado.EsCorrecto = true;
+                // He tenido que poner esto para que en la vista de tiempo de verse el frame de color rojo o verde
+                await Task.Delay(1000);
+            }
+            else if (preguntaActual.PokemonSeleccionado != preguntaActual.PokemonAdivinar)
+            {
+                preguntaRespondida = true;
+                preguntaActual.PokemonSeleccionado.EsCorrecto = false;
+                // He tenido que poner esto para que en la vista de tiempo de verse el frame de color rojo o verde
+                await Task.Delay(1000);
+            }
         }
 
         /// <summary>
@@ -277,34 +319,6 @@ namespace MAUI.VM
             else
             {
 
-                // Entro si se ha seleccionado un Pokémon
-                if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida)
-                {
-                    // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
-                    foreach (Pokemon pokemon in preguntaActual.PokemonClickables)
-                    {
-                        pokemon.EsCorrecto = null;
-                    }
-
-                    if (preguntaActual.PokemonSeleccionado == preguntaActual.PokemonAdivinar)
-                    {
-                        puntos += preguntaActual.Tiempo;
-                        OnPropertyChanged(nameof(Puntos));
-                        preguntaRespondida = true;
-                        preguntaActual.PokemonSeleccionado.EsCorrecto = true;
-                        // He tenido que poner esto para que en la vista de tiempo de verse el frame de color rojo o verde
-                        await Task.Delay(1000);
-                    }
-                    else if (preguntaActual.PokemonSeleccionado != preguntaActual.PokemonAdivinar)
-                    {
-                        preguntaRespondida = true;
-                        preguntaActual.PokemonSeleccionado.EsCorrecto = false;
-                        // He tenido que poner esto para que en la vista de tiempo de verse el frame de color rojo o verde
-                        await Task.Delay(1000);
-                    }
-
-                }
-
                 if (preguntaActual.Tiempo == 0 || preguntaRespondida)
                 {
                     indicePregunta++;
@@ -321,7 +335,7 @@ namespace MAUI.VM
                         OnPropertyChanged(nameof(PreguntaActual));
                     }
 
-                    preguntaActual.Tiempo = 6;
+                    preguntaActual.Tiempo = 5;
                     preguntaRespondida = false;
 
                     if (Ronda > 20)

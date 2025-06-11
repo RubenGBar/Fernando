@@ -100,6 +100,9 @@ namespace MAUI.Models
                         preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
                     }
 
+                    // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
+                    preguntaRellenar.pokemonClickables[i].EsCorrecto = null;
+
                     idRepetidos.Add(idAleatorio);
                 }
             }
@@ -130,7 +133,7 @@ namespace MAUI.Models
 
             shuffle(preguntaRellenar.pokemonClickables);
 
-            preguntaRellenar.tiempo = 6;
+            preguntaRellenar.tiempo = 5;
 
         }
 
