@@ -63,7 +63,7 @@ namespace MAUI.VM
             get { return irRanking; }
         }
 
-        // Estas propiedades hago el property change en el private set, porque probado a hacerlo de la otra forma y no funcionaba
+        // Estas propiedades hago el property change en el private set, porque he probado a hacerlo de la otra forma y no funcionaba
         public bool MostrarFinal
         {
             get { return mostrarFinal; }
@@ -125,6 +125,7 @@ namespace MAUI.VM
                 irRanking.RaiseCanExecuteChanged();
             }
         }
+        // Hasta aquí
 
         public string NickJugador
         {
