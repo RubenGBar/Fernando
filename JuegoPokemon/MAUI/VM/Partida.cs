@@ -20,7 +20,7 @@ namespace MAUI.VM
         private bool mostrarJuego;
         private bool mostrarInstrucciones;
         private bool mostrarFinal;
-        private DelegateCommand miCommand;
+        private DelegateCommand cargarPreguntas;
         private DelegateCommand guardarPartida;
         private DelegateCommand irRanking;
         private bool puedeGuardarPartida;
@@ -38,54 +38,9 @@ namespace MAUI.VM
             get { return preguntas; }
         }
 
-        public bool MostrarFinal
-        {
-            get => mostrarFinal;
-            private set
-            {
-                mostrarFinal = value;
-                OnPropertyChanged(nameof(MostrarFinal));
-            }
-        }
-
-        public bool PuedeGuardarPartida
-        {
-            get => puedeGuardarPartida;
-            private set
-            {
-                puedeGuardarPartida = value;
-                OnPropertyChanged(nameof(PuedeGuardarPartida));
-                guardarPartida.RaiseCanExecuteChanged();
-            }
-        }
-
-        public bool PuedeIrRanking
-        {
-            get => puedeIrRanking;
-            private set
-            {
-                puedeIrRanking = value;
-                OnPropertyChanged(nameof(PuedeIrRanking));
-                irRanking.RaiseCanExecuteChanged();
-            }
-        }
-
-        public bool Cargando
-        {
-            get { return cargando; }
-            private set 
-            { 
-                cargando = value; 
-                OnPropertyChanged(nameof(Cargando)); 
-            }
-        }
-
         public Pregunta PreguntaActual
         {
-            get 
-            {
-                return preguntaActual; 
-            }
+            get { return preguntaActual; }
             private set
             { 
                 preguntaActual = value; 
@@ -95,7 +50,7 @@ namespace MAUI.VM
 
         public DelegateCommand MiCommand
         {
-            get { return miCommand; }
+            get { return cargarPreguntas; }
         }
 
         public DelegateCommand GuardarPartida
@@ -106,6 +61,27 @@ namespace MAUI.VM
         public DelegateCommand IrRanking
         {
             get { return irRanking; }
+        }
+
+        // Estas propiedades hago el property change en el private set, porque probado a hacerlo de la otra forma y no funcionaba
+        public bool MostrarFinal
+        {
+            get { return mostrarFinal; }
+            private set
+            {
+                mostrarFinal = value;
+                OnPropertyChanged(nameof(MostrarFinal));
+            }
+        }
+
+        public bool Cargando
+        {
+            get { return cargando; }
+            private set
+            {
+                cargando = value;
+                OnPropertyChanged(nameof(Cargando));
+            }
         }
 
         public bool MostrarJuego
@@ -128,6 +104,28 @@ namespace MAUI.VM
             }
         }
 
+        public bool PuedeGuardarPartida
+        {
+            get { return puedeGuardarPartida; }
+            private set
+            {
+                puedeGuardarPartida = value;
+                OnPropertyChanged(nameof(PuedeGuardarPartida));
+                guardarPartida.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool PuedeIrRanking
+        {
+            get { return puedeIrRanking; }
+            private set
+            {
+                puedeIrRanking = value;
+                OnPropertyChanged(nameof(PuedeIrRanking));
+                irRanking.RaiseCanExecuteChanged();
+            }
+        }
+
         public string NickJugador
         {
             get { return nickJugador; }
@@ -137,21 +135,11 @@ namespace MAUI.VM
         public int Ronda
         {
             get { return ronda; }
-            private set 
-            { 
-                ronda = value;
-                OnPropertyChanged(nameof(Ronda));
-            }
         }
 
         public int Puntos
         {
             get { return puntos; } 
-            private set 
-            { 
-                puntos = value; 
-                OnPropertyChanged(nameof(Puntos)); 
-            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -165,7 +153,7 @@ namespace MAUI.VM
 
             mostrarInstrucciones = true;
 
-            miCommand = new DelegateCommand(() => EmpezarPartida());
+            cargarPreguntas = new DelegateCommand(() => EmpezarPartida());
             guardarPartida = new DelegateCommand(()=>guardarPartida_Execute(), guardarPartida_CanExecute);
             irRanking = new DelegateCommand(() => irRanking_Execute(), irRanking_CanExecute);
 
@@ -224,7 +212,7 @@ namespace MAUI.VM
             int idRepetido = 0;
             Pregunta nuevaPregunta;
 
-            // Esto lo dejo en esta función que será la que se llame al pulsar el botón
+            // Cargo las preguntas
             for (int i = 0; i < 20; i++)
             {
                 if (preguntaActual != null) 
@@ -245,18 +233,18 @@ namespace MAUI.VM
 
             }
 
+            // Pongo a false el booleano que controla el activityIndicator
             Cargando = false;
 
-            
+            // Muestro el juego y oculto las instrucciones
             MostrarJuego = true;
-
             MostrarInstrucciones = !mostrarInstrucciones;
-
-            if (!MostrarInstrucciones)
+            if (!mostrarInstrucciones)
             {
                 MostrarJuego = true;
             }
 
+            // Si hay alguna pregunta, inicializo la pregunta actual, el tiempo y la ronda
             if (preguntas.Any())
             {
                 preguntaActual = preguntas[indicePregunta];
@@ -264,7 +252,7 @@ namespace MAUI.VM
 
                 OnPropertyChanged(nameof(PreguntaActual));
 
-                Ronda = 1;
+                ronda = 1;
                 OnPropertyChanged(nameof(Ronda));
 
             }
@@ -288,6 +276,7 @@ namespace MAUI.VM
             else
             {
 
+                // Entro si se ha seleccionado un Pokémon
                 if (preguntaActual.PokemonSeleccionado != null && !preguntaRespondida)
                 {
                     // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
@@ -318,7 +307,7 @@ namespace MAUI.VM
                 if (preguntaActual.Tiempo == 0 || preguntaRespondida)
                 {
                     indicePregunta++;
-                    Ronda++;
+                    ronda++;
                     OnPropertyChanged(nameof(Ronda));
 
                     if (indicePregunta >= preguntas.Count())
@@ -336,7 +325,8 @@ namespace MAUI.VM
 
                     if (Ronda > 20)
                     {
-                        Ronda = 20;
+                        ronda = 20;
+                        OnPropertyChanged(nameof(Ronda));
                         MostrarJuego = false;
                         MostrarFinal = true;
                     }
