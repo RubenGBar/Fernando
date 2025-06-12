@@ -208,11 +208,18 @@ namespace MAUI.VM
 
         private async Task guardarPartida_Execute()
         {
-            Puntuacion puntuacionGuardar = new Puntuacion(nickJugador, puntos);
-            await ManejadoraBL.guardarPuntuacionBL(puntuacionGuardar);
+            try 
+            {
+                Puntuacion puntuacionGuardar = new Puntuacion(nickJugador, puntos);
+                await ManejadoraBL.guardarPuntuacionBL(puntuacionGuardar);
 
-            PuedeGuardarPartida = false; 
-            PuedeIrRanking = true;
+                PuedeGuardarPartida = false;
+                PuedeIrRanking = true;
+            }
+            catch (Exception ex)
+            {
+                MuestraMensaje("Error:", "Ha ocurrido un error inesperado con la BD, intentélo más tarde", "Ok");
+            }
 
         }
         #endregion
