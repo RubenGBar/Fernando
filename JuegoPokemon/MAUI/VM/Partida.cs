@@ -252,7 +252,7 @@ namespace MAUI.VM
 
             }
 
-            // Pongo a false el booleano que controla el activityIndicator
+            // Dejo de mostrar el activityIndicator
             Cargando = false;
 
             // Muestro el juego y oculto las instrucciones
@@ -311,14 +311,14 @@ namespace MAUI.VM
         /// <param name="e"></param>
         private async void juegoPrincipal(object? sender, EventArgs e)
         {
-
+            // Se ejecuta mientras haya preguntas
             if (indicePregunta >= preguntas.Count())
             {
                 cuentaHaciaAtras.Stop();
             }
             else
             {
-
+                // Entro a la lógica de pasar ronda solo cuando el tiempo llegue a 0 o se haya respondido la pregunta
                 if (preguntaActual.Tiempo == 0 || preguntaRespondida)
                 {
                     indicePregunta++;

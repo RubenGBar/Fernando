@@ -72,63 +72,46 @@ namespace MAUI.Models
         /// <returns></returns>
         public static async Task prepararPartida(Pregunta preguntaRellenar, HashSet<int> idPokemonAnteriores)
         {
-            List<int> idRepetidos = new List<int>();
+            HashSet<int> idRepetidos = new HashSet<int>();
             preguntaRellenar.pokemonAdivinar = new Pokemon();
             preguntaRellenar.pokemonsIncorrectos = new ObservableCollection<Pokemon>();
             preguntaRellenar.pokemonClickables = new ObservableCollection<Pokemon>();
             Pokemon pokemonIncorrecto = new Pokemon();
             int idAleatorio;
 
-            if (idPokemonAnteriores.Any()) 
+            for (int i = 0; i < 4; i++)
             {
-                for (int i = 0; i < 4; i++)
+                if (idPokemonAnteriores.Any())
                 {
                     do
                     {
                         idAleatorio = Random.Shared.Next(1, 1026);
-                    } while (idPokemonAnteriores.Contains(idAleatorio) && idRepetidos.Contains(idAleatorio));
-
-                    if (i == 0)
-                    {
-                        preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
-                        preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
-                    }
-                    else
-                    {
-                        pokemonIncorrecto = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
-                        preguntaRellenar.pokemonsIncorrectos.Add(pokemonIncorrecto);
-                        preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
-                    }
-
-                    // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
-                    preguntaRellenar.pokemonClickables[i].EsCorrecto = null;
-
-                    idRepetidos.Add(idAleatorio);
+                    } while (idPokemonAnteriores.Contains(idAleatorio) || idRepetidos.Contains(idAleatorio));
                 }
-            }
-            else
-            {
-                for (int i = 0; i < 4; i++)
+                else 
                 {
                     do
                     {
                         idAleatorio = Random.Shared.Next(1, 1026);
-                    } while (idRepetidos.Contains(idAleatorio) || idAleatorio == preguntaRellenar.pokemonAdivinar.Id);
-
-                    if (i == 0)
-                    {
-                        preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
-                        preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
-                    }
-                    else
-                    {
-                        pokemonIncorrecto = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
-                        preguntaRellenar.pokemonsIncorrectos.Add(pokemonIncorrecto);
-                        preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
-                    }
-
-                    idRepetidos.Add(idAleatorio);
+                    } while (idRepetidos.Contains(idAleatorio));
                 }
+
+                if (i == 0)
+                {
+                    preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                    preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
+                }
+                else
+                {
+                    pokemonIncorrecto = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                    preguntaRellenar.pokemonsIncorrectos.Add(pokemonIncorrecto);
+                    preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
+                }
+
+                // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
+                preguntaRellenar.pokemonClickables[i].EsCorrecto = null;
+
+                idRepetidos.Add(idAleatorio);
             }
 
             shuffle(preguntaRellenar.pokemonClickables);
