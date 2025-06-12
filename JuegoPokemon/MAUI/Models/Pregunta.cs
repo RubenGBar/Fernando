@@ -78,45 +78,65 @@ namespace MAUI.Models
             preguntaRellenar.pokemonClickables = new ObservableCollection<Pokemon>();
             Pokemon pokemonIncorrecto = new Pokemon();
             int idAleatorio;
-
-            for (int i = 0; i < 4; i++)
+            try
             {
-                if (idPokemonAnteriores.Any())
+                for (int i = 0; i < 4; i++)
                 {
-                    do
+                    if (idPokemonAnteriores.Any())
                     {
-                        idAleatorio = Random.Shared.Next(1, 1026);
-                    } while (idPokemonAnteriores.Contains(idAleatorio) || idRepetidos.Contains(idAleatorio));
-                }
-                else 
-                {
-                    do
+                        do
+                        {
+                            idAleatorio = Random.Shared.Next(1, 1026);
+                        } while (idPokemonAnteriores.Contains(idAleatorio) || idRepetidos.Contains(idAleatorio));
+                    }
+                    else
                     {
-                        idAleatorio = Random.Shared.Next(1, 1026);
-                    } while (idRepetidos.Contains(idAleatorio));
+                        do
+                        {
+                            idAleatorio = Random.Shared.Next(1, 1026);
+                        } while (idRepetidos.Contains(idAleatorio));
+                    }
+
+                    if (i == 0)
+                    {
+                        preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                        preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
+                    }
+                    else
+                    {
+                        pokemonIncorrecto = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
+                        preguntaRellenar.pokemonsIncorrectos.Add(pokemonIncorrecto);
+                        preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
+                    }
+
+                    // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
+                    preguntaRellenar.pokemonClickables[i].EsCorrecto = null;
+
+                    idRepetidos.Add(idAleatorio);
                 }
 
-                if (i == 0)
+                shuffle(preguntaRellenar.pokemonClickables);
+
+                preguntaRellenar.tiempo = 5;
+            }
+            catch (Exception ex) 
+            {
+                if (ex.Message.Contains("404"))
                 {
-                    preguntaRellenar.pokemonAdivinar = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
-                    preguntaRellenar.pokemonClickables.Add(preguntaRellenar.pokemonAdivinar);
+                    MuestraMensaje("Error:", "No se han encontrado registros en la BD", "Ok");
+
+                }
+                else if (ex.Message.Contains("400"))
+                {
+                    MuestraMensaje("Error:", "Ha habido un bad Request", "Ok");
+
                 }
                 else
                 {
-                    pokemonIncorrecto = await ManejadoraBL.obtenerUnPokemonPorIDBL(idAleatorio);
-                    preguntaRellenar.pokemonsIncorrectos.Add(pokemonIncorrecto);
-                    preguntaRellenar.pokemonClickables.Add(pokemonIncorrecto);
+                    MuestraMensaje("Error:", "Ha ocurrido un error inesperado", "Ok");
+
                 }
-
-                // Pongo el esCorrecto de cada pokemon de la pregunta a null para que aparezca transparente
-                preguntaRellenar.pokemonClickables[i].EsCorrecto = null;
-
-                idRepetidos.Add(idAleatorio);
             }
-
-            shuffle(preguntaRellenar.pokemonClickables);
-
-            preguntaRellenar.tiempo = 5;
 
         }
 
@@ -140,6 +160,16 @@ namespace MAUI.Models
                 listaMezclar[indice] = pokemonApoyo;
 
             }
+        }
+        /// <summary>
+        /// Esta función muestra un mensaje en la pantalla
+        /// </summary>
+        /// <param name="mensajeTitulo"> Mensaje de la cabecera </param>
+        /// <param name="mensajeCuerpo"> Mensaje del cuerpo </param>
+        /// <param name="mensajeBoton"> Mensaje del botón </param>
+        public static async void MuestraMensaje(string mensajeTitulo, string mensajeCuerpo, string mensajeBoton)
+        {
+            await Shell.Current.DisplayAlert(mensajeTitulo, mensajeCuerpo, mensajeBoton);
         }
         #endregion
 

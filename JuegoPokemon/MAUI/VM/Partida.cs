@@ -224,59 +224,80 @@ namespace MAUI.VM
         /// <returns></returns>
         private async Task EmpezarPartida()
         {
-            Cargando = true;
-
-            int indicePregunta = 0;
-            HashSet<int> idPokemonAnteriores = new HashSet<int>();
-            int idRepetido = 0;
-            Pregunta nuevaPregunta;
-
-            // Cargo las preguntas
-            for (int i = 0; i < 20; i++)
+            try
             {
-                if (preguntaActual != null) 
+                Cargando = true;
+
+                int indicePregunta = 0;
+                HashSet<int> idPokemonAnteriores = new HashSet<int>();
+                int idRepetido = 0;
+                Pregunta nuevaPregunta;
+
+                // Cargo las preguntas
+                for (int i = 0; i < 20; i++)
                 {
-                    // Guardo los IDs de los Pokémon ya usados para evitar que se repitan en futuras preguntas
-                    foreach (Pokemon pokemonRepetido in preguntaActual.PokemonClickables)
+                    if (preguntaActual != null)
                     {
-                        idRepetido = pokemonRepetido.Id;
-                        idPokemonAnteriores.Add(idRepetido);
+                        // Guardo los IDs de los Pokémon ya usados para evitar que se repitan en futuras preguntas
+                        foreach (Pokemon pokemonRepetido in preguntaActual.PokemonClickables)
+                        {
+                            idRepetido = pokemonRepetido.Id;
+                            idPokemonAnteriores.Add(idRepetido);
+                        }
                     }
+
+                    nuevaPregunta = new Pregunta();
+
+                    await Pregunta.prepararPartida(nuevaPregunta, idPokemonAnteriores);
+
+                    preguntas.Add(nuevaPregunta);
+
                 }
 
-                nuevaPregunta = new Pregunta();
+                // Dejo de mostrar el activityIndicator
+                Cargando = false;
 
-                await Pregunta.prepararPartida(nuevaPregunta, idPokemonAnteriores);
-
-                preguntas.Add(nuevaPregunta);
-
-            }
-
-            // Dejo de mostrar el activityIndicator
-            Cargando = false;
-
-            // Muestro el juego y oculto las instrucciones
-            MostrarJuego = true;
-            MostrarInstrucciones = !mostrarInstrucciones;
-            if (!mostrarInstrucciones)
-            {
+                // Muestro el juego y oculto las instrucciones
                 MostrarJuego = true;
-            }
+                MostrarInstrucciones = !mostrarInstrucciones;
+                if (!mostrarInstrucciones)
+                {
+                    MostrarJuego = true;
+                }
 
-            // Si hay alguna pregunta, inicializo la pregunta actual, el tiempo y la ronda
-            if (preguntas.Any())
+                // Si hay alguna pregunta, inicializo la pregunta actual, el tiempo y la ronda
+                if (preguntas.Any())
+                {
+                    preguntaActual = preguntas[indicePregunta];
+                    preguntaActual.Tiempo = 5;
+
+                    OnPropertyChanged(nameof(PreguntaActual));
+
+                    ronda = 1;
+                    OnPropertyChanged(nameof(Ronda));
+
+                }
+
+                cuentaHaciaAtras.Start();
+            }
+            catch (Exception ex)
             {
-                preguntaActual = preguntas[indicePregunta];
-                preguntaActual.Tiempo = 5;
+                if (ex.Message.Contains("404"))
+                {
+                    MuestraMensaje("Error:", "No se han encontrado registros en la BD", "Ok");
 
-                OnPropertyChanged(nameof(PreguntaActual));
+                }
+                else if (ex.Message.Contains("400"))
+                {
+                    MuestraMensaje("Error:", "Ha habido un bad Request", "Ok");
 
-                ronda = 1;
-                OnPropertyChanged(nameof(Ronda));
+                }
+                else
+                {
+                    MuestraMensaje("Error:", "Ha ocurrido un error inesperado", "Ok");
 
+                }
             }
-
-            cuentaHaciaAtras.Start();
 
         }
 
@@ -355,6 +376,16 @@ namespace MAUI.VM
             }
         }
 
+        /// <summary>
+        /// Esta función muestra un mensaje en la pantalla
+        /// </summary>
+        /// <param name="mensajeTitulo"> Mensaje de la cabecera </param>
+        /// <param name="mensajeCuerpo"> Mensaje del cuerpo </param>
+        /// <param name="mensajeBoton"> Mensaje del botón </param>
+        public static async void MuestraMensaje(string mensajeTitulo, string mensajeCuerpo, string mensajeBoton)
+        {
+            await Shell.Current.DisplayAlert(mensajeTitulo, mensajeCuerpo, mensajeBoton);
+        }
         #endregion
 
         #region Notify
