@@ -121,21 +121,8 @@ namespace MAUI.Models
             }
             catch (Exception ex) 
             {
-                if (ex.Message.Contains("404"))
-                {
-                    MuestraMensaje("Error:", "No se han encontrado registros en la BD", "Ok");
-
-                }
-                else if (ex.Message.Contains("400"))
-                {
-                    MuestraMensaje("Error:", "Ha habido un bad Request", "Ok");
-
-                }
-                else
-                {
-                    MuestraMensaje("Error:", "Ha ocurrido un error inesperado", "Ok");
-
-                }
+                
+                MuestraMensaje("Error:", "Ha ocurrido un error inesperado con la BD, intentélo más tarde", "Ok");
             }
 
         }
