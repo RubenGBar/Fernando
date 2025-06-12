@@ -33,11 +33,6 @@ namespace MAUI.VM
         #endregion
 
         #region Propiedades
-        public ObservableCollection<Pregunta> Preguntas
-        {
-            get { return preguntas; }
-        }
-
         public Pokemon PokemonSeleccionado
         {
             // He tenido que poner ahí que pregunta actual puede ser null, porque si no me daba un error al entrar en la vista
