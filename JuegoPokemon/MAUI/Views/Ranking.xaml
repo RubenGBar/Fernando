@@ -13,7 +13,7 @@
     <Grid>
         <Image Source="fondo.jpg"
                Aspect="Center"
-               Opacity="0.3"
+               Opacity="0.1"
                VerticalOptions="Fill"
                HorizontalOptions="Fill" />
 
